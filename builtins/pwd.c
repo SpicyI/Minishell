@@ -1,39 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/13 16:24:41 by del-khay          #+#    #+#             */
-/*   Updated: 2023/01/28 18:22:47 by del-khay         ###   ########.fr       */
+/*   Created: 2023/01/28 18:36:02 by del-khay          #+#    #+#             */
+/*   Updated: 2023/01/28 18:37:41 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strjoin(char *dst, char *src)
+void   pwd(void)
 {
-	char	*rst;
-	int		i;
+    char *cwd;
 
-	i = 0;
-	if (!dst)
-	{
-		dst = ft_calloc(1, sizeof(char));
-		if (!dst)
-			return (0);
-	}
-	rst = ft_calloc(ft_strlen(dst) + ft_strlen(src) + 1, sizeof(char));
-	if (!rst)
-		return (0);
-	while (dst && dst[i])
-	{
-		rst[i] = dst[i];
-		i++;
-	}
-	while (*src)
-		rst[i++] = *src++;
-	free(dst);
-	return (rst);
+    cwd = getcwd(NULL, 0);
+    ft_putendl_fd(cwd, 1);
+    free(cwd);
 }

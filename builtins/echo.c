@@ -38,6 +38,3 @@ int main(int ac, char **av)
     echo(av + 1);
     return (0);
 }
-
-//q: how to implement the cd command
-//a: https://stackoverflow.com/questions/298510/how-to-get-the-current-directory-in-a-c-program

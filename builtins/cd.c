@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 19:50:32 by del-khay          #+#    #+#             */
-/*   Updated: 2023/01/28 22:59:29 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/01/29 18:28:54 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void cd(char *path)
     }
 }
 
-// int main(int ac, char **av)
-// {
-//     cd(av[1]);
-//     //printf("%s\n",getcwd(NULL, 0));
-//     system("leaks cd");
-//     return (0);
-// }
+int main(int ac, char **av)
+{
+    cd(av[1]);
+    printf("%s\n",getcwd(NULL, 0));
+    //system("leaks cd");
+    return (0);
+}

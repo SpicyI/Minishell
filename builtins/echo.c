@@ -1,20 +1,23 @@
 #include "minishell.h"
 
-int arrlen(char **arr)
+int is_option(char *str)
 {
-    int i;
+    if (!str || ft_strlen(str) < 2 || *str != '-')
+        return (0);
+    while (*(++str))
+    {
+        if (*str != 'n')
+            return (0);
+    }
+    return (1);
+}
 
-    i = 0;
-    while (arr[i])
-        i++;
-    return (i);
-} 
 void    echo(char **str)
 {
     int n;
 
     n = 0;
-    if (str && ft_strlen(*str) && ft_strncmp(*str, ECHO_NL,ft_strlen(str[0])) == 0)
+    if (is_option(*str))
     {
         n = 1;
         str++;

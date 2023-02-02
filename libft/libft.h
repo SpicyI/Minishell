@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:42:14 by del-khay          #+#    #+#             */
-/*   Updated: 2022/12/22 22:54:29 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/02 22:00:40 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+size_t				ft_dstrlen(const char *s, char c);
 char				*ft_itoa(int n);
 void				ft_free2(char **string);
 char				*ft_strchr(const char *s, int c);

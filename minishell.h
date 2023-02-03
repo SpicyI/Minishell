@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/01 22:58:26 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/03 22:44:34 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,21 @@ void    cd(char *path);
 
 /*         pwd              */
 //all good so far
-
 void   pwd(void);
+
+/*			export 			*/
+int	parss_export(char *str);
+void	export(char **str);
+void	printexport(void);
+char	**ft_export_spliter(char *str);
+int	check_name(char *name, int opt);
+int	is_env(char **tab);
+t_export	*ft_exportnew(char **content);
+t_env	*ft_envnew(char **content);
+void	ft_envadd_back(t_env **alst, t_env *new);
+void	ft_exportadd_back(t_export **alst, t_export *new);
+void	freenode2(t_not_env *node);
+void	freenode(t_export *node);
+
+
 #endif

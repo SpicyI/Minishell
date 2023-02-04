@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:11:36 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/03 20:15:19 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/04 19:08:21 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_env	*ft_envnew(char **content)
 	return (new_node);
 }
 
-t_export	*ft_exportnew(char **content)
+t_export	*ft_exportnew(char *content)
 {
 	t_export	*new_node;
 
@@ -41,10 +41,9 @@ t_export	*ft_exportnew(char **content)
 	if (!new_node)
 		return (0);
 	if (content)
-		new_node->name = content[0];
+		new_node->name = content;
 	else
 		new_node->name = 0;
-	new_node->value = 0;
 	new_node->next = 0;
 	return (new_node);
 }
@@ -68,7 +67,7 @@ void	ft_envadd_back(t_env **alst, t_env *new)
 
 void	ft_exportadd_back(t_export **alst, t_export *new)
 {
-	t_export *tmp;
+	t_export	*tmp;
 
 	if (!alst || !new)
 		return ;

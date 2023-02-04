@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/03 22:44:34 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/04 19:09:02 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_env
 typedef struct s_export
 {
 	char *name;
-	char *value;
 	struct s_export	*next;
 } t_export;
 // for the env vars that are not in the env list but can be exporte through export 
@@ -102,18 +101,22 @@ void    cd(char *path);
 void   pwd(void);
 
 /*			export 			*/
-int	parss_export(char *str);
+int ft_env(char *str);
+int	export_type(char **tab);
+void exporter(char **tab);
+void    importer(char *str);
+int is_env(char **tab);
+int is_export(char **tab);
+int is_not_env(char **tab);
 void	export(char **str);
 void	printexport(void);
 char	**ft_export_spliter(char *str);
 int	check_name(char *name, int opt);
-int	is_env(char **tab);
-t_export	*ft_exportnew(char **content);
+t_export	*ft_exportnew(char *content);
 t_env	*ft_envnew(char **content);
 void	ft_envadd_back(t_env **alst, t_env *new);
 void	ft_exportadd_back(t_export **alst, t_export *new);
-void	freenode2(t_not_env *node);
-void	freenode(t_export *node);
-
+void	free_not_env_node(t_not_env *node);
+void	free_export_node(t_export *node);
 
 #endif

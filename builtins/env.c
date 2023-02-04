@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 14:40:24 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/05 00:24:07 by del-khay         ###   ########.fr       */
+/*   Created: 2023/02/04 21:54:08 by del-khay          #+#    #+#             */
+/*   Updated: 2023/02/05 00:33:44 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_isdigit(int c)
+void	env(char **args)
 {
-	if (!(c > 47 && c < 58))
-		return (0);
-	return (13);
-}
+	t_env	*env;
 
-int	alldigit(char *s)
-{
-	if (!s || !ft_strlen(s))
-		return (0);
-	if (!ft_isdigit(*s) && *s != '+' && *s != '-')
-		return (0);
-	if (ft_strlen(s) == 1 && *s == '+' && *s == '-')
-		return (0);
-	s++;
-	while (*s)
+	env = g_gfl.env;
+	while (env)
 	{
-		if (!ft_isdigit(*s))
-			return (0);
-		s++;
+		printf("%s=\"%s\"\n", env->name, env->value);
+		env = env->next;
 	}
-	return (1);
 }

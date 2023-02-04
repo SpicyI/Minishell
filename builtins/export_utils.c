@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 17:04:28 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/04 19:18:37 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:52:51 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	exporter(char **tab)
 {
 	if (!check_name(tab[0], 1))
 	{
-		printf("export: `%s': not a valid identifier\n", tab[0]);
+		printf("export: `%s=%s': not a valid identifier\n", tab[0], tab[1]);
 		ft_dfree(tab);
 		return ;
 	}

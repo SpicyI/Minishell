@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/04 19:09:02 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/05 00:28:03 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,18 @@ t_env	*ft_envnew(char **content);
 void	ft_envadd_back(t_env **alst, t_env *new);
 void	ft_exportadd_back(t_export **alst, t_export *new);
 void	free_not_env_node(t_not_env *node);
+void	free_env_node(t_env *node);
 void	free_export_node(t_export *node);
 
+/*			unset			*/
+int unset_env(char *name);
+int unset_export(char *name);
+int unset_not_env(char *name);
+void    unset(char **args);
+
+/*			env				*/
+void    env(char **args);
+
+/*			exit			*/
+void    shell_exit(char **args);
 #endif

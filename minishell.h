@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/05 00:28:03 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/06 00:16:18 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 /************************************************************************************************/
 /*          defines         */
 #define ECHO_NL "-n"
-
-
-
+#define N_BUILTIN 7
+#define FREE_FD_ARR 1
+#define NO_FREE_FD_ARR 0
 
 
 
@@ -30,6 +30,12 @@
 
 /************************************************************************************************/
 /*          structs         */
+
+typedef struct s_match{
+	int (*sh_built)(char **);
+	char *name;
+} t_match;
+
 // environnement variables
 typedef struct s_env
 {
@@ -60,6 +66,8 @@ typedef struct s_cmd
 	char **delimiter;
 	char **input;
 	char **cmd;
+	int	last_in;
+	int	last_out;
 	int	is_built_in;
 } t_cmd;
 
@@ -89,26 +97,26 @@ t_line g_gfl;
 /**************************************************************************************************/
 /*          echo            */
 // all good do far
-void    echo(char **str);
+int    echo(char **str);
 int is_option(char *str);
 
 /*          cd              */
 // handle OLDPWD and PWD env vars snd cd -
-void    cd(char *path);
+int    cd(char *path);
 
 /*         pwd              */
 //all good so far
-void   pwd(void);
+int   pwd(void);
 
 /*			export 			*/
 int ft_env(char *str);
 int	export_type(char **tab);
-void exporter(char **tab);
-void    importer(char *str);
+int exporter(char **tab);
+int    importer(char *str);
 int is_env(char **tab);
 int is_export(char **tab);
 int is_not_env(char **tab);
-void	export(char **str);
+int	export(char **str);
 void	printexport(void);
 char	**ft_export_spliter(char *str);
 int	check_name(char *name, int opt);
@@ -124,11 +132,11 @@ void	free_export_node(t_export *node);
 int unset_env(char *name);
 int unset_export(char *name);
 int unset_not_env(char *name);
-void    unset(char **args);
+int    unset(char **args);
 
 /*			env				*/
-void    env(char **args);
+int    env(char **args);
 
 /*			exit			*/
-void    shell_exit(char **args);
+int    shell_exit(char **args);
 #endif

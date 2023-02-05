@@ -6,13 +6,13 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 00:18:27 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/05 00:32:09 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/05 18:18:13 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	shell_exit(char **args)
+int	shell_exit(char **args)
 {
 	unsigned char	status;
 
@@ -27,10 +27,11 @@ void	shell_exit(char **args)
 	if (args[2])
 	{
 		printf("exit: too many arguments\n");
-		return ;
+		return (1);
 	}
 	status = ft_atoi(args[1]);
 	exit(status);
+	return (0);
 }
 
 // int main(int argc, char **argv)

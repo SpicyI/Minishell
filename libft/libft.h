@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:42:14 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/05 00:25:24 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/05 22:48:49 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,16 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+/*				edited						*/
+int					ft_strncmp(const char *s1, const char *s2, int n);
+
+/*					added					*/
+size_t				ft_arrlen(const char **s);
 int					alldigit(char *s);
 void				ft_dfree(char **string);
 size_t				ft_dstrlen(const char *s, char c);
+
+/*				og							*/
 char				*ft_itoa(int n);
 void				ft_free2(char **string);
 char				*ft_strchr(const char *s, int c);
@@ -41,7 +48,6 @@ char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				**ft_split(char const *s, char c);
 int					ft_atoi(const char *nptr);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
-int					ft_strncmp(const char *s1, const char *s2, int n);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
 int					ft_isascii(int c);

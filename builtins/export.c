@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 17:18:24 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/04 20:54:26 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/05 18:29:47 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,21 +80,22 @@ int	export_type(char **tab)
 	return (0);
 }
 
-void	export(char **str)
+int	export(char **str)
 {
 	if (!str || !*str)
 	{
 		printexport();
-		return ;
+		return (0);
 	}
 	while (*str)
 	{
 		if (ft_strchr(*str, '='))
-			exporter(ft_export_spliter(ft_strdup(*str)));
+			return (exporter(ft_export_spliter(ft_strdup(*str))));
 		else
-			importer(ft_strdup(*str));
+			return (importer(ft_strdup(*str)));
 		str++;
 	}
+	return (0);
 }
 
 // int	main(int ac, char **av, char **env)

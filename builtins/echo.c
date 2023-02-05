@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 18:31:50 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/04 18:31:57 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/05 18:14:22 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_option(char *str)
 	return (1);
 }
 
-void	echo(char **str)
+int	echo(char **str)
 {
 	int	n;
 
@@ -43,6 +43,7 @@ void	echo(char **str)
 	}
 	if (n == 0)
 		ft_putchar_fd('\n', 1);
+	return (0);
 }
 
 // int	main(int ac, char **av)

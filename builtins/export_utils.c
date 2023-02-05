@@ -6,38 +6,41 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 17:04:28 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/04 21:52:51 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/05 18:20:36 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exporter(char **tab)
+int	exporter(char **tab)
 {
 	if (!check_name(tab[0], 1))
 	{
 		printf("export: `%s=%s': not a valid identifier\n", tab[0], tab[1]);
 		ft_dfree(tab);
-		return ;
+		return (1);
 	}
 	else if (!export_type(tab))
 		ft_envadd_back(&g_gfl.env, ft_envnew(tab));
 	free(tab);
+	return (0);
 }
 
-void	importer(char *str)
+int	importer(char *str)
 {
 	if (check_name(str, 0))
 	{
 		if (ft_env(str))
-			return ;
+			return (0);
 		ft_exportadd_back(&g_gfl.exp, ft_exportnew(str));
 	}
 	else
 	{
 		printf("export: `%s': not a valid identifier\n", str);
+		return (1);
 		free(str);
 	}
+	return (0);
 }
 
 int	is_env(char **tab)

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:01:29 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/04 21:50:28 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/05 18:34:58 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,19 @@ int	unset_not_env(char *name)
 	return (0);
 }
 
-void	unset(char **args)
+int	unset(char **args)
 {
 	char	*str;
-
+	int		status;
+	
+	status = 0;
 	while (*args)
 	{
 		str = ft_strdup(*args);
 		if (!check_name(str, 0))
 		{
 			printf("unset: %s: not a valid identifier\n", str);
+			status = 1;
 			free(str);
 			args++;
 			continue ;
@@ -104,6 +107,7 @@ void	unset(char **args)
 		free(str);
 		args++;
 	}
+	return (status);
 }
 
 // int	main(int ac, char **av, char **env)

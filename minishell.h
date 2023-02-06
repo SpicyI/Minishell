@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/06 00:16:18 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/06 23:58:50 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <stdio.h>
 #include "libft/libft.h"
 #include <dirent.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 /************************************************************************************************/
 /*          defines         */
@@ -23,13 +25,29 @@
 #define N_BUILTIN 7
 #define FREE_FD_ARR 1
 #define NO_FREE_FD_ARR 0
-
+#define APPEND 1
+#define TRUNC 2
+#define HERDOC_ON 1 
+#define HERDOC_OFF 0
+#define HERDOC_FD 1
+#define INPUT_FD 2
 
 
 
 
 /************************************************************************************************/
+
 /*          structs         */
+
+typedef struct s_builtin
+{
+	int input_fd;
+    int output_fd;
+    int herdoc_fd;
+	int status;
+	int default_fd[2];
+	int b_pipe;
+} t_built;
 
 typedef struct s_match{
 	int (*sh_built)(char **);
@@ -66,8 +84,8 @@ typedef struct s_cmd
 	char **delimiter;
 	char **input;
 	char **cmd;
-	int	last_in;
-	int	last_out;
+	int	last_in; // 0 for stdin, 1 for heredoc, 2 for input file
+	int	last_out; // 0 for stdout, 1 for append, 2 for trunc
 	int	is_built_in;
 } t_cmd;
 
@@ -102,7 +120,7 @@ int is_option(char *str);
 
 /*          cd              */
 // handle OLDPWD and PWD env vars snd cd -
-int    cd(char *path);
+int    cd(char **path);
 
 /*         pwd              */
 //all good so far
@@ -139,4 +157,32 @@ int    env(char **args);
 
 /*			exit			*/
 int    shell_exit(char **args);
+
+
+
+/******************************************************************************************/
+//this part is for the execution of the commands
+/*  innit ref to builtins functs */
+t_match *init(void);
+
+/*				herdoc		*/
+int herdoc(char *delmiter,int opt);
+
+/*				closer.c*/
+void close_Fds(int *fds, int i, int opt);
+int closer(t_cmd *cmd , int *input_fds, int *output_fds);
+
+
+/*				opener.c */
+int	open_herdoc(t_cmd *cmd);
+int openinputs(char **in_files);
+int openoutputs(t_cmd *cmd);
+int opener(t_cmd *cmd , t_built *utils);
+
+
+/*				execution 	*/
+void    executor(t_cmds *cmds);
+int builtin(t_cmd *cmd);
+void unsetfds(t_built *utils);
+void setfds(t_built *utils, t_cmd *cmd);
 #endif

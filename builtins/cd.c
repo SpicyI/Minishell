@@ -6,29 +6,30 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 19:50:32 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/05 18:12:09 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/06 21:46:50 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cd(char *path)
+int	cd(char **path)
 {
-	if (!path)
-		path = getenv("HOME");
-	if (!path)
+	if (!*path)
+		*path = getenv("HOME");
+	if (!*path)
 	{
 		ft_putendl_fd("cd: HOME not set", 2);
 		return (1);
 	}
 	// update oldpwd here
-	if (!ft_strlen(path))
+	if (!ft_strlen(*path))
 		return (0);
-	if (chdir(path) == -1)
+	if (chdir(*path) == -1)
 	{
-		perror(ft_strjoin(ft_strdup("cd: "), path));
+		perror(ft_strjoin(ft_strdup("cd: "), *path));
 		return (1);
 	}
+	return(0);
 	// update pwd here
 }
 

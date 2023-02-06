@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 19:57:54 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/06 00:33:48 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/07 00:17:24 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_match *init(void)
     ref[0].name = "echo";
     ref[1].sh_built = &cd;
     ref[1].name = "cd";
-    ref[2].sh_built = &pwd;
+    ref[2].sh_built = (int (*)(char **)) &pwd;
     ref[2].name = "pwd";
     ref[3].sh_built = &export;
     ref[3].name = "export";
@@ -29,111 +29,41 @@ t_match *init(void)
     ref[4].name = "unset";
     ref[5].sh_built = &env;
     ref[5].name = "env";
-    ref[6].sh_built = &exit;
+    ref[6].sh_built = &shell_exit;
     ref[6].name = "exit";
     return (ref);
 }
 
-close_Fds(int *input_fds, int i, int opt)
-{
-    while (i >= 0)
-    {
-        close(input_fds[i]);
-        i--;
-    }
-    if (opt)
-        free(input_fds);
-}
 
-int *openinputs(char **in_files)
-{
-    int *input_fds;
-    int i;
-
-    i = 0;
-    input_fds = (int *) ft_calloc(ft_arrlen(in_files), sizeof(int)); 
-    while(in_files[i] && input_fds)
-    {
-        input_fds[i] = open(in_files[i], O_RDONLY);
-        if (input_fds[i] < 0)
-        {
-            printf("%s: No such file or directory", in_files[i]);
-            colse_Fds(input_fds, i , 1);
-            return (NULL);
-        }
-        i++;
-    }
-    return (input_fds);
-}
-
-int *openoutputs(char **out_files)
-{
-    int *output_fds;
-    int i;
-
-    i = 0;
-    output_fds = (int *) ft_calloc(ft_arrlen(out_files), sizeof(int)); 
-    while(out_files[i] && output_fds)
-    {
-        output_fds[i] = open(out_files[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-        // if (output_fds[i] < 0)
-        // {
-        //     printf("%s: No such file or directory", out_files[i]);
-        //     colse_inputFds(output_fds, i);
-        //     return (NULL);
-        // }
-        i++;
-    }
-    return (output_fds);
-}
 int builtin(t_cmd *cmd)
 {   
     t_match *ref;
-    int *input_fd;
-    int *output_fd;
+    t_built utils;
     int i;
 
     i = 0;
+    utils.status = 0;
+    utils.input_fd = 0;
+    utils.output_fd = 0;
     ref = init();
-    // if (cmd->delimiter)
-    // {
-    //     //open herdoc here    
-    // }
-    if (cmd->input)
-    {
-        input_fd = openinputs(cmd->input);
-        if (!input_fd)
-            return (1);
-    }
-    if (cmd->append)
-    {
-        output_fd = openoutputs_appeded(cmd->append);
-    }
-    if (cmd->output)
-    {
-        output_fd = openoutputs(cmd->output);
-    }
+    if (cmd->delimiter)
+			utils.herdoc_fd = open_herdoc(cmd);
+    if (!opener(cmd, &utils))
+        return (1);
+    setfds(&utils , cmd);
     while(ref[i].name)
     {
         if(!ft_strncmp(cmd->cmd[0], ref[i].name, 0))
         {
-            return (ref[i].sh_built(cmd->cmd));
+            utils.status = ref[i].sh_built(cmd->cmd + 1);
+            break ;
         }
         i++;
     }
-    if (cmd->input)
-    {
-        close_Fds(input_fd, ft_arrlen(cmd->input), FREE_FD_ARR);
-    }
-    if (cmd->append)
-    {
-        close_Fds(output_fd, ft_arrlen(cmd->append), FREE_FD_ARR);
-    }
-    if (cmd->output)
-    {
-        close_Fds(output_fd, ft_arrlen(cmd->output), FREE_FD_ARR);
-    }
-    
+    printf("done \n");
+    unsetfds(&utils);
+    //closer(cmd ,utils.input_fd, utils.output_fd);
+    return(utils.status);
 }
 
 
@@ -146,5 +76,32 @@ void    executor(t_cmds *cmds)
         g_gfl.exit = builtin(cmds->line);
         return ;
     }
-    pipeline(cmds);
+    //pipeline(cmds);
+}
+
+int main(int argc, char **av, char **envp)
+{
+    t_cmds *cmds;
+    
+    cmds = (t_cmds *)ft_calloc(1, sizeof(t_cmds));
+    cmds->size = 1;
+    cmds->line = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+    cmds->line->append = 0;
+    cmds->line->last_in = HERDOC_FD;
+    cmds->line->last_out = TRUNC;
+    cmds->line->output = ft_calloc(2, sizeof(char *));
+    cmds->line->output[0] = ft_strdup("out1");
+    cmds->line->output[1] = NULL;
+    //+++++++
+    cmds->line->delimiter = ft_calloc(2, sizeof(char *));
+    cmds->line->delimiter[0] = ft_strdup("EOF");
+    cmds->line->delimiter[1] = NULL;
+    //+++++++
+    cmds->line->input = 0;
+    cmds->line->is_built_in = 1;
+    cmds->line->cmd = (char **)ft_calloc(3, sizeof(char *));
+    cmds->line->cmd[0] = ft_strdup(av[1]);
+    cmds->line->cmd[1] = ft_strdup(av[2]);
+    cmds->line->cmd[2] = NULL;
+    executor(cmds);
 }

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:42:14 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/05 22:48:49 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/06 21:43:38 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_list
 int					ft_strncmp(const char *s1, const char *s2, int n);
 
 /*					added					*/
-size_t				ft_arrlen(const char **s);
+size_t				ft_arrlen(char **s);
 int					alldigit(char *s);
 void				ft_dfree(char **string);
 size_t				ft_dstrlen(const char *s, char c);

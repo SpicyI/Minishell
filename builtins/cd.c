@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 19:50:32 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/07 17:56:22 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/07 23:14:37 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	cd(char **path)
 		perror(ft_strjoin(ft_strdup("cd: "), *path));
 		return (1);
 	}
-	return(0);
+	return (0);
 	// update pwd here
 }
 

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:01:29 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/05 18:34:58 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/07 23:15:37 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	unset(char **args)
 {
 	char	*str;
 	int		status;
-	
+
 	status = 0;
 	while (*args)
 	{

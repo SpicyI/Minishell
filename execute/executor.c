@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 19:57:54 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/07 00:17:24 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/07 22:37:27 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int builtin(t_cmd *cmd)
         }
         i++;
     }
-    printf("done \n");
     unsetfds(&utils);
     //closer(cmd ,utils.input_fd, utils.output_fd);
     return(utils.status);
@@ -72,16 +71,20 @@ void    executor(t_cmds *cmds)
     if (!cmds || !cmds->line || cmds->size <= 0)
         return ;
     if (cmds->size == 1 && cmds->line->is_built_in)
-    {
         g_gfl.exit = builtin(cmds->line);
-        return ;
-    }
-    //pipeline(cmds);
+    else if (cmds->size == 1 && !cmds->line->is_built_in)
+        g_gfl.exit = single_cmd(cmds->line);
+    // else if (cmds->size > 1)
+    //     g_gfl.exit = pipeline(t_cmds cmd,cmds->size);
 }
 
 int main(int argc, char **av, char **envp)
 {
     t_cmds *cmds;
+    g_gfl.exit = 0;
+    char *del[] = {"del1","del3","del2", NULL};
+    char *out[] = {"out1","out2","out3", NULL};
+    char *in[] = {"in1","in3","in2", NULL};
     
     cmds = (t_cmds *)ft_calloc(1, sizeof(t_cmds));
     cmds->size = 1;
@@ -89,19 +92,18 @@ int main(int argc, char **av, char **envp)
     cmds->line->append = 0;
     cmds->line->last_in = HERDOC_FD;
     cmds->line->last_out = TRUNC;
-    cmds->line->output = ft_calloc(2, sizeof(char *));
-    cmds->line->output[0] = ft_strdup("out1");
-    cmds->line->output[1] = NULL;
+    cmds->line->output = out;
+
     //+++++++
-    cmds->line->delimiter = ft_calloc(2, sizeof(char *));
-    cmds->line->delimiter[0] = ft_strdup("EOF");
-    cmds->line->delimiter[1] = NULL;
+    cmds->line->delimiter = del;
     //+++++++
-    cmds->line->input = 0;
-    cmds->line->is_built_in = 1;
-    cmds->line->cmd = (char **)ft_calloc(3, sizeof(char *));
+    cmds->line->input = in;
+    cmds->line->is_built_in = 0;
+    cmds->line->cmd = (char **)ft_calloc(2, sizeof(char *));
     cmds->line->cmd[0] = ft_strdup(av[1]);
-    cmds->line->cmd[1] = ft_strdup(av[2]);
-    cmds->line->cmd[2] = NULL;
+    //cmds->line->cmd[1] = 0;//ft_strdup(av[2]);
+    cmds->line->cmd[1] = NULL;
     executor(cmds);
+    printf("\n------> [%d]\n", g_gfl.exit);
+    //system("lsof -c mini");
 }

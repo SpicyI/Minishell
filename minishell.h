@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/06 23:58:50 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/07 22:20:19 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <dirent.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
+#include <errno.h>
 /************************************************************************************************/
 /*          defines         */
 #define ECHO_NL "-n"
@@ -46,7 +46,7 @@ typedef struct s_builtin
     int herdoc_fd;
 	int status;
 	int default_fd[2];
-	int b_pipe;
+	int b_pipe[2];
 } t_built;
 
 typedef struct s_match{
@@ -164,7 +164,12 @@ int    shell_exit(char **args);
 //this part is for the execution of the commands
 /*  innit ref to builtins functs */
 t_match *init(void);
-
+int ft_envlen(t_env *env);
+char *ft_getenv(char *name);
+char **env_to_arr(void);
+char *getpath(char *cmd, char **path);
+int	ft_exitstatus(int status);
+void ft_isdir(char *cmd , int opt);
 /*				herdoc		*/
 int herdoc(char *delmiter,int opt);
 
@@ -185,4 +190,8 @@ void    executor(t_cmds *cmds);
 int builtin(t_cmd *cmd);
 void unsetfds(t_built *utils);
 void setfds(t_built *utils, t_cmd *cmd);
+
+/*				single_cmd*/
+void ft_execve(t_cmd *cmd);
+int single_cmd(t_cmd *cmd);
 #endif

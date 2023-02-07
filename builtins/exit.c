@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 00:18:27 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/06 22:03:55 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/07 20:55:00 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	shell_exit(char **args)
 	unsigned char	status;
 
 	printf("exit\n");
-	if (!args[0])
+	if ((args && !ft_strncmp(args[0], "--", 0)) || (!args || !args[0]))
 		exit(0);
 	if (!alldigit(args[0]))
 	{

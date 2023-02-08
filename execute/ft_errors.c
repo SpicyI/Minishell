@@ -1,37 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   herdoc.c                                           :+:      :+:    :+:   */
+/*   ft_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/06 17:44:44 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/08 16:18:05 by del-khay         ###   ########.fr       */
+/*   Created: 2023/02/08 16:32:39 by del-khay          #+#    #+#             */
+/*   Updated: 2023/02/08 16:42:26 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	herdoc(char *delmiter, int opt)
-{
-	int		fds[2];
-	char	*line;
+// int ft_return_error(int opt, char *str, int ret)
+// {
+//     int std_out;
 
-	pipe(fds);
-	while (1)
-	{
-		line = readline("> ");
-		if (!ft_strncmp(line, delmiter, 0))
-		{
-			free(line);
-			break ;
-		}
-		line = ft_strjoin(line, "\n");
-		write(fds[1], line, ft_strlen(line));
-		free(line);
-	}
-	close(fds[1]);
-	if (opt == HERDOC_OFF)
-		return (close(fds[0]));
-	return (fds[0]);
-}
+//     std_out = dup(1);
+//     dup2(2, 1);
+    
+//     dup2(std_out, 1);
+//     return (ret);
+// }

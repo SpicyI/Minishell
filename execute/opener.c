@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:12:37 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/07 00:16:08 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:18:13 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	openinputs(char **in_files)
 {
-	int fd;
+	int	fd;
 	int	i;
 
 	i = 0;
@@ -36,7 +36,7 @@ int	openinputs(char **in_files)
 
 int	openoutputs(t_cmd *cmd)
 {
-	int fd;
+	int	fd;
 	int	i;
 
 	i = 0;
@@ -56,8 +56,7 @@ int	openoutputs(t_cmd *cmd)
 	i = 0;
 	while (cmd->append && cmd->append[i])
 	{
-		fd = open(cmd->append[i], O_RDWR | O_CREAT | O_APPEND,
-				0644);
+		fd = open(cmd->append[i], O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (fd < 0)
 		{
 			printf("%s: Permission denied", cmd->append[i]);
@@ -73,13 +72,15 @@ int	openoutputs(t_cmd *cmd)
 
 int	open_herdoc(t_cmd *cmd)
 {
-	int fd;
-	int i;
-	int len;
-	
+	int	fd;
+	int	i;
+	int	len;
+
 	len = ft_arrlen(cmd->delimiter);
+	if (!len)
+		return (0);
 	i = 0;
-	while(cmd->delimiter[i] && i < len - 1)
+	while (cmd->delimiter[i] && i < len - 1)
 	{
 		herdoc(cmd->delimiter[i], HERDOC_OFF);
 		i++;
@@ -88,9 +89,8 @@ int	open_herdoc(t_cmd *cmd)
 		fd = herdoc(cmd->delimiter[i], HERDOC_ON);
 	else
 		fd = herdoc(cmd->delimiter[i], HERDOC_OFF);
-	return(fd);
+	return (fd);
 }
-
 
 int	opener(t_cmd *cmd, t_built *utils)
 {

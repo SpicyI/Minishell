@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:53:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/08 17:17:42 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:23:47 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,51 @@
 
 void	ft_init_global(char **envp)
 {
-	g_gfl = malloc(sizeof(t_line));
-	g_gfl->exit = 0;
-	g_gfl->env = ft_link(envp);
-	g_gfl->syntax_error = 0;
-	g_gfl->pipeline_error = NULL;
-	g_gfl->p_error_index = -1;
+	g_gfl.exit = 0;
+	g_gfl.env = ft_link(envp);
+	g_gfl.syntax_error = 0;
+	g_gfl.pipeline_error = NULL;
+	g_gfl.p_error_index = -1;
+	g_gfl.not_env = NULL;
 }
 
-void	ft_reset(char *line)
+void	ft_reset(char *line, t_cmds *cmds)
 {
-	g_gfl->syntax_error = 0;
-	g_gfl->p_error_index = -1;
-	// if (g_gfl->pipeline_error)
-	// 	free(g_gfl->pipeline_error);
-	g_gfl->pipeline_error = NULL;
+	g_gfl.syntax_error = 0;
+	g_gfl.p_error_index = -1;
+	g_gfl.pipeline_error = NULL;
 	free(line);
 	line = NULL;
+	ft_free_struct(cmds);
 }
 
-void	ft_read_loop(void)
+void	ft_read_loop(int nl)
 {
-	int		nl;
 	t_cmds	*cmds;
 	char	*line;
 
-	nl = 0;
 	while (1)
 	{
 		if (nl)
-			line = ft_strjoin(line, ft_strtrim(readline("> "), " "));
+			line = ft_strjoin(line, ft_trim(ft_color(0), " "));
 		else
-			line = ft_strtrim(readline("WEIRDOO$ "), " ");
+			line = ft_trim(ft_color(1), " ");
 		add_history(line);
 		ft_pipe_syntax(line, 0, 0, 0);
-		if (line[ft_strlen(line) - 1] == '|')
-			nl = 1;	
+		if (line[ft_strlen(line) - 1] == '|' && !g_gfl.pipeline_error)
+			nl = 1;
 		else if (line[0] == '|' && nl == 0)
 			ft_throw_error(line, 0);
 		else if (ft_strlen(line))
 		{
 			cmds = ft_parsing(line, 0);
-			executor(cmds);
-			ft_reset(line);
+			if (!g_gfl.syntax_error && g_gfl.p_error_index == -1)
+				executor(cmds);
+			ft_reset(line, cmds);
 			nl = 0;
-			
 		}
 	}
+	free(line);
 }
 
 t_cmds	*ft_parsing(char *line, int i)
@@ -70,15 +68,18 @@ t_cmds	*ft_parsing(char *line, int i)
 
 	cmds = ft_calloc(sizeof(t_cmds), 1);
 	parts = ft_double_spit(line, cmds);
-	while (parts[i] && i != g_gfl->p_error_index)
+	while (parts[i] && i != g_gfl.p_error_index)
 	{
-		cmds->line[i] = malloc(sizeof(t_cmd));
-		ft_init_struct(cmds->line[i]);
-		ft_prod_line(parts[i], cmds->line[i], !parts[i + 1]);
-		ft_print_struct(cmds->line[i]);
-		printf("\n");
+		ft_init_struct(cmds->line + i);
+		ft_prod_line(parts[i], cmds->line + i, !parts[i + 1]);
 		i++;
 	}
+	while (i < cmds->size)
+	{
+		ft_free_double(parts[i]);
+		i++;
+	}
+	free(parts);
 	ft_doc_doc(cmds->line, i);
 	return (cmds);
 }
@@ -88,6 +89,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	ft_init_global(envp);
-	ft_read_loop();
+	ft_read_loop(0);
 	return (0);
 }

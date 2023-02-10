@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:49:57 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/08 17:07:54 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:23:47 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_butcher(char *line, char **cmds, char c)
 	{
 		x = i;
 		i = ft_skip(line, i, c);
-		cmds[j] = ft_strtrim(ft_substr(line, x, i - x), " ");
+		cmds[j] = ft_trim(ft_substr(line, x, i - x), " ");
 		j++;
 		while (line[i] == c)
 			i++;
@@ -66,9 +66,9 @@ char	**ft_super_split(char *line, char c)
 
 	i = 0;
 	nbr_of_cmds = ft_count_cmds(line, c, 0);
-	cmds = malloc(sizeof(char *) * (nbr_of_cmds + 1));
-	cmds[nbr_of_cmds] = NULL;
+	cmds = ft_calloc(nbr_of_cmds + 1, sizeof(char *));
 	ft_butcher(line, cmds, c);
+	free(line);
 	return (cmds);
 }
 
@@ -77,6 +77,8 @@ void	ft_free_double(char **array)
 	int	i;
 
 	i = 0;
+	if (!array)
+		return ;
 	while (array && array[i])
 	{
 		free(array[i]);
@@ -99,17 +101,15 @@ char	***ft_double_spit(char *line, t_cmds *cmds_list)
 	while (cmds[i])
 		i++;
 	cmds_list->size = i;
-	cmds_list->line = malloc(sizeof(t_cmd *) * (i + 1));
-	cmds_list->line[i] = NULL;
-	parts = malloc(sizeof(char **) * (i + 1));
-	parts[i] = NULL;
+	cmds_list->line = ft_calloc(i + 1, sizeof(t_cmd));
+	parts = ft_calloc(i + 1, sizeof(char **));
 	i = 0;
 	while (cmds[i])
 	{
-		buffer = ft_strtrim(cmds[i], " ");
+		buffer = ft_trim(cmds[i], " ");
 		parts[i] = ft_super_split(buffer, ' ');
-		free(buffer);
 		i++;
 	}
+	free(cmds);
 	return (parts);
 }

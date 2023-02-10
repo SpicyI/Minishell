@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:15:21 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/08 17:07:41 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:23:47 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ void	ft_fill_struct(char **array, t_cmd *cmd, int i, int is_last)
 {
 	while (array[i])
 	{
-		ft_valid_syntax(array, i, is_last);
-		if (g_gfl->syntax_error)
+		if (ft_valid_syntax(array, i, is_last))
 			break ;
 		if (ft_strcmp(array[i], ">>"))
 			cmd->append = ft_append(cmd->append, array[++i]);
@@ -75,6 +74,7 @@ void	ft_fill_struct(char **array, t_cmd *cmd, int i, int is_last)
 		if (array[i])
 			i++;
 	}
+	ft_free_stuff(array, i);
 }
 
 void	ft_set_helpers(char **array, t_cmd *cmd)
@@ -84,10 +84,14 @@ void	ft_set_helpers(char **array, t_cmd *cmd)
 	i = 0;
 	while (array[i])
 	{
-		if (ft_strcmp(array[i], ">>") && ft_strcmp(array[i], ">"))
-			cmd->last_out = i;
-		else if (ft_strcmp(array[i], "<<") && ft_strcmp(array[i], "<")) 
-			cmd->last_in = i;
+		if (ft_strcmp(array[i], ">>"))
+			cmd->last_out = 1;
+		else if (ft_strcmp(array[i], ">"))
+			cmd->last_out = 2;
+		else if (ft_strcmp(array[i], "<<"))
+			cmd->last_in = 1;
+		else if (ft_strcmp(array[i], "<"))
+			cmd->last_in = 2;
 		i++;
 	}
 }

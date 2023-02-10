@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:14:12 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/08 17:26:27 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:03:19 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	ft_env(char *str)
 	t_env		*tmp;
 	t_export	*tmp2;
 
-	tmp = g_gfl->env;
-	tmp2 = g_gfl->exp;
+	tmp = g_gfl.env;
+	tmp2 = g_gfl.exp;
 	while (tmp)
 	{
 		if (!ft_strncmp(str, tmp->name, 0))

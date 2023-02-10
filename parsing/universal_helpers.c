@@ -6,70 +6,23 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:28:32 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/08 17:07:41 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:23:47 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_struct(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	printf("| Is built in : %s |\n", cmd->is_built_in ? "yes": "no");
-	printf("| cmd array : ");
-	while (cmd->cmd && cmd->cmd[i])
-	{
-		printf("%s ", cmd->cmd[i]);
-		i++;
-	}
-	i = 0;
-	printf("|\n| append array : ");
-	while (cmd->append && cmd->append[i])
-	{
-		printf("%s ", cmd->append[i]);
-		i++;
-	}
-	i = 0;
-	printf("|\n| delimiter array : ");
-	while (cmd->delimiter && cmd->delimiter[i])
-	{
-		printf("%s ", cmd->delimiter[i]);
-		i++;
-	}
-	i = 0;
-	printf("|\n| output array : ");
-	while (cmd->output && cmd->output[i])
-	{
-		printf("%s ", cmd->output[i]);
-		i++;
-	}
-	i = 0;
-	printf("|\n| input array : ");
-	while (cmd->input && cmd->input[i])
-	{
-		printf("%s ", cmd->input[i]);
-		i++;
-	}
-	printf("|\n| is syntax error: %s", g_gfl->syntax_error ? "yes":"no");
-	printf("|\n|");
-}
-
-
-char	**ft_destructor(char **array, char **array2)
+char	**ft_destructor(char **array, char **array2, int j)
 {
 	int		i;
-	int		j;
 	char	**new_array;
 
 	i = 0;
 	while (array && array[i])
 		i++;
-	j = 0;
 	while (array2 && array2[j])
 		j++;
-	new_array = malloc(sizeof(char *) * (i + j + 1));
+	new_array = ft_calloc(i + j + 1, sizeof(char *));
 	i = 0;
 	while (array && array[i])
 	{
@@ -82,7 +35,8 @@ char	**ft_destructor(char **array, char **array2)
 		new_array[i + j] = array2[j];
 		j++;
 	}
-	new_array[i + j] = NULL;
+	free(array);
+	free(array2);
 	return (new_array);
 }
 
@@ -120,7 +74,7 @@ char	*ft_remove_quotes(char *str)
 	i = 0;
 	in_d = 0;
 	in_s = 0;
-	new_str = NULL;
+	new_str = ft_calloc(1, 1);
 	while (str[i])
 	{
 		if (str[i] == '"' && !in_s)
@@ -155,4 +109,24 @@ int	ft_skip(char *line, int i, char c)
 		i++;
 	}
 	return (i);
+}
+
+void	ft_free_struct(t_cmds *cmds)
+{
+	int	i;
+
+	i = 0;
+	if (!cmds)
+		return ;
+	while (i < cmds->size)
+	{
+		ft_free_double((cmds->line + i)->append);
+		ft_free_double((cmds->line + i)->cmd);
+		ft_free_double((cmds->line + i)->output);
+		ft_free_double((cmds->line + i)->input);
+		ft_free_double((cmds->line + i)->delimiter);
+		i++;
+	}
+	free(cmds);
+	cmds = NULL;
 }

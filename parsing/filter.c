@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 18:02:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/08 17:07:41 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:23:47 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ char	**ft_append(char **array, char *new_str)
 	if (ft_strlen(new_str) == 0)
 		return (array);
 	if (!array)
-		new_array = malloc(sizeof(char *) * 2);
+		new_array = ft_calloc(2, sizeof(char *));
 	else
 	{
 		while (array[i])
 			i++;
-		new_array = malloc(sizeof(char *) * (i + 2));
+		new_array = ft_calloc(i + 2, sizeof(char *));
 		i = 0;
 		while (array[i])
 		{
@@ -35,7 +35,7 @@ char	**ft_append(char **array, char *new_str)
 		}
 	}
 	new_array[i] = new_str;
-	new_array[i + 1] = NULL;
+	free(array);
 	return (new_array);
 }
 
@@ -83,7 +83,8 @@ char	**ft_filter(char *part, int i, int j)
 		else
 			i++;
 	}
-	return (ft_append(part_array, ft_substr(part, j, i - j)));
+	part_array = ft_append(part_array, ft_substr(part, j, i - j));
+	return (part_array);
 }
 
 void	ft_printf_double(char **array)
@@ -107,9 +108,10 @@ void	ft_prod_line(char **cmd, t_cmd *s_cmd, int is_last)
 	array = NULL;
 	while (cmd[i])
 	{
-		array = ft_destructor(array, ft_filter(cmd[i], 0, 0));
+		array = ft_destructor(array, ft_filter(cmd[i], 0, 0), 0);
 		i++;
 	}
+	ft_free_double(cmd);
 	ft_find_env(array);
 	ft_set_helpers(array, s_cmd);
 	ft_fill_struct(array, s_cmd, 0, is_last);

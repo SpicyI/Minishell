@@ -6,27 +6,36 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:23:12 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/08 16:17:45 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 15:16:20 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	setfds(t_built *utils, t_cmd *cmd)
+void	setfds(t_built *utils, t_cmd *cmd, int opt)
 {
-	utils->default_fd[0] = dup(0);
-	utils->default_fd[1] = dup(1);
-	if (cmd->last_in == HERDOC_FD)
+	// utils->default_fd[0] = dup(0);
+	// utils->default_fd[1] = dup(1);
+	if (cmd->last_in == HERDOC_FD && opt)
 	{
 		dup2(utils->herdoc_fd, 0);
 		close(utils->herdoc_fd);
-		close(utils->input_fd);
+		if (utils->input_fd)
+			close(utils->input_fd);
 	}
-	else
+	else if (cmd->last_in == INPUT_FD)
 	{
-		dup2(utils->input_fd, 0);
+		dup2(utils->input_fd, STDIN_FILENO);
 		close(utils->input_fd);
-		close(utils->herdoc_fd);
+		if (utils->herdoc_fd)
+			close(utils->herdoc_fd);
+	}
+	else if (cmd->last_in != HERDOC_FD && cmd->last_in != INPUT_FD)
+	{
+		if (utils->input_fd)
+			close(utils->input_fd);
+		if (utils->herdoc_fd)
+			close(utils->herdoc_fd);
 	}
 	if (cmd->append || cmd->output)
 	{

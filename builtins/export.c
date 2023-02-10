@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 17:18:24 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/08 17:26:27 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:03:19 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	printexport(void)
 	t_env		*env;
 	t_export	*exp;
 
-	env = g_gfl->env;
-	exp = g_gfl->exp;
+	env = g_gfl.env;
+	exp = g_gfl.exp;
 	while (env)
 	{
 		printf("declare -x %s=\"%s\"\n", env->name, env->value);
@@ -105,21 +105,21 @@ int	export(char **str)
 
 // 	t_env *head;
 // 	char **arg;
-// 	g_gfl->exp = 0;
-// 	g_gfl->not_env = 0;
+// 	g_gfl.exp = 0;
+// 	g_gfl.not_env = 0;
 // 	arg = ft_split(env[0], '=');
-// 	g_gfl->env = ft_envnew(arg);
+// 	g_gfl.env = ft_envnew(arg);
 // 	free(arg);
-// 	head = g_gfl->env;
+// 	head = g_gfl.env;
 // 	env++;
 // 	while (*env)
 // 	{
 // 		arg = ft_split(*env, '=');
-// 		ft_envadd_back(&g_gfl->env, ft_envnew(arg));
+// 		ft_envadd_back(&g_gfl.env, ft_envnew(arg));
 // 		free(arg);
 // 		env++;
 // 	}
-// 	g_gfl->env = head;
+// 	g_gfl.env = head;
 // 	export(av + 1);
 // 	sleep(2);
 // 	export(0);

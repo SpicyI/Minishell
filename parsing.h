@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:57:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/08 17:25:34 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:27:33 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 # define PARSING_H
 # include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include "libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <limits.h>
 
-/*          structs         */
 
 typedef struct s_builtin
 {
@@ -92,8 +93,51 @@ typedef struct s_line
 	int		p_error_index;
 }						t_line;
 
-t_line					*g_gfl;
+t_line					g_gfl;
+// typedef struct s_env
+// {
+// 	char	*name;
+// 	char	*value;
+// 	void	*next;
+// }	t_env;
 
+// typedef struct s_not_env
+// {
+// 	char				*name;
+// 	char				*value;
+// 	struct s_not_env	*next;
+// }	t_not_env;
+
+// typedef struct s_cmd
+// {
+// 	char	**append;
+// 	char	**output;
+// 	char	**delimiter;
+// 	char	**input;
+// 	char	**cmd;
+// 	int		last_in;
+// 	int		last_out;
+// 	int		is_built_in;
+// }	t_cmd;
+
+// typedef struct s_cmds{
+// 	t_cmd	*line;
+// 	int		size;
+// }	t_cmds;
+
+// typedef struct s_line{
+// 	int			exit;
+// 	t_env		*env;
+// 	t_not_env	*not_env;
+// 	int			syntax_error; // false by default
+// 	char		*pipeline_error;
+// 	int			p_error_index; // -1 by default 
+// }	t_line;
+
+// t_line	g_gfl;
+
+void	ft_free_stuff(char **array, int start);
+char *ft_hyphen(char *str);
 void	ft_butcher(char *line, char **cmds, char c);
 int		ft_count_cmds(char *line, char c, int i);
 char	**ft_super_split(char *line, char c);
@@ -104,16 +148,15 @@ void	ft_prod_line(char **cmd, t_cmd *s_cmd, int is_last);
 char	**ft_filter(char *part, int i, int j);
 int		ft_key_chars(char *str, char ***array);
 char	**ft_append(char **array, char *new_str);
-void	ft_valid_syntax(char **cmd, int i, int is_last);
+int		ft_valid_syntax(char **cmd, int i, int is_last);
 void	ft_throw_error(char	*str, int code);
 void	ft_right_arrow(char **cmd, int i, int is_last);
 void	ft_left_arrow(char **cmd, int i, int is_last);
 int		ft_strcmp(char *str, char *str2);
 void	ft_fill_struct(char **array, t_cmd *cmd, int i, int is_last);
-void	ft_delete(char **array, int i);
 void	ft_print_struct(t_cmd *cmd);
 void	ft_init_struct(t_cmd *cmd);
-char	**ft_destructor(char **array, char **array2);
+char	**ft_destructor(char **array, char **array2, int j);
 void	ft_pipeline_error(char *line, int i, int nbr);
 char	*ft_append_char(char *str, char c);
 char	*ft_get_env(char *str, int i);
@@ -122,17 +165,24 @@ void	ft_find_env(char **array);
 t_env	*ft_link(char **envp);
 t_env	*ft_new_env(char *name, char *value);
 void	ft_env_add(t_env **lst, t_env *new);
-void	ft_open_doc(t_cmd **line, int i);
+void	ft_open_doc(t_cmd *line, int i);
 char	*ft_remove_quotes(char *str);
 int		ft_skip(char *line, int i, char c);
 void	ft_init_global(char **envp);
-void	ft_reset(char *line);
+void	ft_reset(char *line, t_cmds *cmds);
 t_cmds	*ft_parsing(char *line, int i);
 void	ft_pipe_syntax(char *line, int i, int in_d, int in_s);
-void	ft_doc_doc(t_cmd **line, int i);
-char 	*ft_fill_with(int size, char c);
+void	ft_doc_doc(t_cmd *line, int i);
 char	**ft_split_by_pipeline(char *line);
 int		ft_pipe_counter(char *line);
 void	ft_set_helpers(char **array, t_cmd *cmd);
+char	*ft_trim(char *line, char *set);
+char	*ft_clean_join(char *str, char *str2);
+void	ft_free_struct(t_cmds *cmds);
+void	ft_free_operators(char **array);
+char	*ft_color(int i);
+void	ft_read_loop(int nl);
+t_env	*ft_no_env(void);
+char	*ft_find_not_env(char *name);
 
 #endif

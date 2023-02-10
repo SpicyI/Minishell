@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 19:57:54 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/08 17:26:27 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 15:17:23 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	builtin(t_cmd *cmd)
 	t_built	utils;
 	int		i;
 
-	i = 0;
+	i = -1;
 	utils.status = 0;
 	utils.input_fd = 0;
 	utils.output_fd = 0;
@@ -49,18 +49,17 @@ int	builtin(t_cmd *cmd)
 		utils.herdoc_fd = open_herdoc(cmd);
 	if (!opener(cmd, &utils))
 		return (1);
-	setfds(&utils, cmd);
-	while (ref[i].name)
+	setfds(&utils, cmd, HERDOC_ON);
+	while (ref[++i].name)
 	{
 		if (!ft_strncmp(cmd->cmd[0], ref[i].name, 0))
 		{
 			utils.status = ref[i].sh_built(cmd->cmd + 1);
 			break ;
 		}
-		i++;
 	}
 	unsetfds(&utils);
-	//closer(cmd ,utils.input_fd, utils.output_fd);
+	free(ref);
 	return (utils.status);
 }
 
@@ -69,9 +68,11 @@ void	executor(t_cmds *cmds)
 	if (!cmds || !cmds->line || cmds->size <= 0)
 		return ;
 	if (cmds->size == 1 && cmds->line->is_built_in)
-		g_gfl->exit = builtin(cmds->line);
+		g_gfl.exit = builtin(cmds->line);
 	else if (cmds->size == 1 && !cmds->line->is_built_in)
-		g_gfl->exit = single_cmd(cmds->line);
+		g_gfl.exit = single_cmd(cmds->line);
 	else if (cmds->size > 1)
-		g_gfl->exit = pipeline(cmds->line, cmds->size);
+	{
+		g_gfl.exit = pipeline(cmds->line, cmds->size);
+	}
 }

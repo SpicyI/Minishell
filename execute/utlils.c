@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:22:16 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/08 17:26:27 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:05:07 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ char	**env_to_arr(void)
 	t_env	*ref;
 	int		i;
 
-	ref = g_gfl->env;
+	ref = g_gfl.env;
 	i = 0;
-	if (ft_envlen(g_gfl->env) == 0)
+	if (ft_envlen(g_gfl.env) == 0)
 		return (NULL);
-	env = ft_calloc(ft_envlen(g_gfl->env) + 1, sizeof(char *));
+	env = ft_calloc(ft_envlen(g_gfl.env) + 1, sizeof(char *));
 	while (ref)
 	{
 		env[i] = ft_strjoin(ft_strjoin(ft_strdup(ref->name), "="), ref->value);
@@ -66,4 +66,16 @@ int	ft_envlen(t_env *env)
 		env = env->next;
 	}
 	return (i);
+}
+
+char	*check_abs_path(char *cmd)
+{
+	if (!access(cmd, F_OK))
+	{
+		if (!access(cmd, X_OK))
+			return (cmd);
+		printf("%s : Permission denied\n", cmd);
+		exit(126);
+	}
+	return (NULL);
 }

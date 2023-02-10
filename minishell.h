@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/08 17:38:09 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 15:16:53 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,78 +44,78 @@
 
 /*          structs         */
 
-typedef struct s_builtin
-{
-	int					input_fd;
-	int					output_fd;
-	int					herdoc_fd;
-	int					status;
-	int					default_fd[2];
-	int					b_pipe[2];
-}						t_built;
+// typedef struct s_builtin
+// {
+// 	int					input_fd;
+// 	int					output_fd;
+// 	int					herdoc_fd;
+// 	int					status;
+// 	int					default_fd[2];
+// 	int					b_pipe[2];
+// }						t_built;
 
-typedef struct s_match
-{
-	int					(*sh_built)(char **);
-	char				*name;
-}						t_match;
+// typedef struct s_match
+// {
+// 	int					(*sh_built)(char **);
+// 	char				*name;
+// }						t_match;
 
-// environnement variables
-typedef struct s_env
-{
-	char				*name;
-	char				*value;
-	struct s_env		*next;
-}						t_env;
+// // environnement variables
+// typedef struct s_env
+// {
+// 	char				*name;
+// 	char				*value;
+// 	struct s_env		*next;
+// }						t_env;
 
-// for the export command
-typedef struct s_export
-{
-	char				*name;
-	struct s_export		*next;
-}						t_export;
-// for the env vars that are not in the env list
-// but can be exporte through export
-typedef struct s_not_env
-{
-	char				*name;
-	char				*value;
-	struct s_not_env	*next;
-}						t_not_env;
+// // for the export command
+// typedef struct s_export
+// {
+// 	char				*name;
+// 	struct s_export		*next;
+// }						t_export;
+// // for the env vars that are not in the env list
+// // but can be exporte through export
+// typedef struct s_not_env
+// {
+// 	char				*name;
+// 	char				*value;
+// 	struct s_not_env	*next;
+// }						t_not_env;
 
-// command
-typedef struct s_cmd
-{
-	char				**append;
-	char				**output;
-	char				**delimiter;
-	char				**input;
-	char				**cmd;
-	int					last_in;
-	int					last_out;
-	int					is_built_in;
-}						t_cmd;
+// // command
+// typedef struct s_cmd
+// {
+// 	char				**append;
+// 	char				**output;
+// 	char				**delimiter;
+// 	char				**input;
+// 	char				**cmd;
+// 	int					last_in;
+// 	int					last_out;
+// 	int					is_built_in;
+// }						t_cmd;
 
-// cmd table
-typedef struct s_cmds
-{
-	t_cmd				*line;
-	int					size;
-}						t_cmds;
+// // cmd table
+// typedef struct s_cmds
+// {
+// 	t_cmd				*line;
+// 	int					size;
+// }						t_cmds;
 
-//global struct
-typedef struct s_line
-{
-	int					exit;
-	t_env				*env;
-	t_not_env			*not_env;
-	t_export			*exp;
-		int		syntax_error;
-	char	*pipeline_error;
-	int		p_error_index;
-}						t_line;
+// //global struct
+// typedef struct s_line
+// {
+// 	int					exit;
+// 	t_env				*env;
+// 	t_not_env			*not_env;
+// 	t_export			*exp;
+// 		int		syntax_error;
+// 	char	*pipeline_error;
+// 	int		p_error_index;
+// }						t_line;
 
-t_line					g_gfl;
+// t_line					g_gfl;
 
 /******************************************************/
 /*          echo            */
@@ -124,7 +124,7 @@ int						echo(char **str);
 int						is_option(char *str);
 
 /*          cd              */
-// handle OLDPWD and PWD env vars snd cd -
+// handle  cd - and cd a rmoved dir
 int						cd(char **path);
 
 /*         pwd              */
@@ -171,6 +171,7 @@ int						ft_envlen(t_env *env);
 char					*ft_getenv(char *name);
 char					**env_to_arr(void);
 char					*getpath(char *cmd, char **path);
+char					*check_abs_path(char *cmd);
 int						ft_exitstatus(int status);
 void					ft_isdir(char *cmd, int opt);
 /*				herdoc		*/
@@ -184,13 +185,15 @@ int						closer(t_cmd *cmd, int *input_fds, int *output_fds);
 int						open_herdoc(t_cmd *cmd);
 int						openinputs(char **in_files);
 int						openoutputs(t_cmd *cmd);
+int						openoutputs_trunc(t_cmd *cmd);
+int						openoutputs_append(t_cmd *cmd);
 int						opener(t_cmd *cmd, t_built *utils);
 
 /*				execution 	*/
 void					executor(t_cmds *cmds);
 int						builtin(t_cmd *cmd);
 void					unsetfds(t_built *utils);
-void					setfds(t_built *utils, t_cmd *cmd);
+void					setfds(t_built *utils, t_cmd *cmd, int  opt);
 int						pipeline(t_cmd *cmds, int num_of_cmds);
 void					ft_waitall(pid_t *id, int num_of_cmds);
 

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 15:10:37 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/08 17:07:41 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:23:47 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ t_env	*ft_link(char **envp)
 	char	*name;
 	char	*value;
 
+	if (!envp[0])
+		return (ft_no_env());
 	i = 0;
 	envi = NULL;
 	while (envp[i])
@@ -60,5 +62,17 @@ t_env	*ft_link(char **envp)
 		ft_env_add(&envi, ft_new_env(name, value));
 		i++;
 	}
+	return (envi);
+}
+
+t_env	*ft_no_env(void)
+{
+	char	*buffer;
+	t_env	*envi;
+
+	envi = NULL;
+	buffer = ft_calloc(PATH_MAX, sizeof(char));
+	ft_env_add(&envi, ft_new_env("PWD", getcwd(buffer, PATH_MAX)));
+	ft_env_add(&envi, ft_new_env("SHLVL", "1"));
 	return (envi);
 }

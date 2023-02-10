@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 17:04:28 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/08 17:26:27 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:03:19 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	exporter(char **tab)
 		return (1);
 	}
 	else if (!export_type(tab))
-		ft_envadd_back(&g_gfl->env, ft_envnew(tab));
+		ft_envadd_back(&g_gfl.env, ft_envnew(tab));
 	free(tab);
 	return (0);
 }
@@ -32,7 +32,7 @@ int	importer(char *str)
 	{
 		if (ft_env(str))
 			return (0);
-		ft_exportadd_back(&g_gfl->exp, ft_exportnew(str));
+		ft_exportadd_back(&g_gfl.exp, ft_exportnew(str));
 	}
 	else
 	{
@@ -48,7 +48,7 @@ int	is_env(char **tab)
 	t_env	*tmp;
 	char	*trim;
 
-	tmp = g_gfl->env;
+	tmp = g_gfl.env;
 	trim = ft_strtrim(tab[0], "+");
 	while (tmp)
 	{
@@ -78,7 +78,7 @@ int	is_export(char **tab)
 	t_export	*holder;
 	char		*trim;
 
-	tmp = g_gfl->exp;
+	tmp = g_gfl.exp;
 	trim = ft_strtrim(tab[0], "+");
 	holder = 0;
 	while (tmp)
@@ -88,7 +88,7 @@ int	is_export(char **tab)
 			free(tab[0]);
 			tab[0] = trim;
 			if (!holder)
-				g_gfl->exp = tmp->next;
+				g_gfl.exp = tmp->next;
 			else
 				holder->next = tmp->next;
 			free_export_node(tmp);
@@ -107,7 +107,7 @@ int	is_not_env(char **tab)
 	t_not_env	*holder;
 	char		*trim;
 
-	tmp = g_gfl->not_env;
+	tmp = g_gfl.not_env;
 	trim = ft_strtrim(tab[0], "+");
 	holder = 0;
 	while (tmp)
@@ -117,7 +117,7 @@ int	is_not_env(char **tab)
 			free(tab[0]);
 			tab[0] = trim;
 			if (!holder)
-				g_gfl->not_env = tmp->next;
+				g_gfl.not_env = tmp->next;
 			else
 				holder->next = tmp->next;
 			free_not_env_node(tmp);

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:49:36 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/08 17:07:41 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:23:47 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	ft_throw_error(char *str, int code)
 	int	i;
 
 	i = 0;
-	ft_putstr_fd("WEIRDOO: syntax error near unexpected token `", 2);
+	ft_putstr_fd("\033[0;31mWEIRDOO: syntax error near unexpected token `", 2);
 	if (code == 1)
 	{
-		g_gfl->syntax_error = 1;
+		g_gfl.syntax_error = 1;
 		ft_putstr_fd(str, 2);
 	}
 	else if (code == 0)
@@ -31,7 +31,7 @@ void	ft_throw_error(char *str, int code)
 			i++;
 		}
 	}
-	ft_putstr_fd("'\n", 2);
+	ft_putstr_fd("'\n\033[0m", 2);
 }
 
 void	ft_left_arrow(char **cmd, int i, int is_last)
@@ -57,10 +57,10 @@ void	ft_right_arrow(char **cmd, int i, int is_last)
 		ft_throw_error(cmd[i] + 2, 1);
 	else if (!cmd[i + 1])
 	{
-			if (is_last)
-				ft_throw_error("newline", 1);
-			else
-				ft_throw_error("|", 1);
+		if (is_last)
+			ft_throw_error("newline", 1);
+		else
+			ft_throw_error("|", 1);
 	}
 	else if (cmd[i + 1][0] == '>')
 		ft_throw_error(ft_substr(cmd[i + 1], 0, 2), 1);
@@ -68,11 +68,11 @@ void	ft_right_arrow(char **cmd, int i, int is_last)
 		ft_throw_error(ft_substr(cmd[i + 1], 0, 2), 1);
 }
 
-void	ft_valid_syntax(char **cmd, int i, int is_last)
+int	ft_valid_syntax(char **cmd, int i, int is_last)
 {
 	if (cmd[i][0] == '>')
 		ft_right_arrow(cmd, i, is_last);
 	else if (cmd[i][0] == '<')
 		ft_left_arrow(cmd, i, is_last);
+	return (g_gfl.syntax_error);
 }
-

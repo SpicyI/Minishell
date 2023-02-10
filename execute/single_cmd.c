@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:02:06 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/08 17:26:27 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:31:13 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_exitstatus(int status)
 	if (WIFSIGNALED(status))
 	{
 		exitstatus = WTERMSIG(status);
-		return (exitstatus);
+		return (exitstatus + 128);
 	}
 	return (0);
 }
@@ -44,7 +44,7 @@ char	*ft_getenv(char *name)
 {
 	t_env	*ref;
 
-	ref = g_gfl->env;
+	ref = g_gfl.env;
 	while (ref)
 	{
 		if (!ft_strncmp(ref->name, name, 0))
@@ -58,13 +58,9 @@ char	*getpath(char *cmd, char **path)
 {
 	char	*check;
 
-	if (!access(cmd, F_OK))
-	{
-		if (!access(cmd, X_OK))
-			return (cmd);
-		printf("%s : Permission denied\n", cmd);
-		exit(126);
-	}
+	check  = check_abs_path(cmd);
+	if (check)
+		return (check);
 	while (path && *path && *cmd)
 	{
 		check = ft_strjoin(ft_strjoin(ft_strdup(*path), "/"), cmd);
@@ -90,7 +86,7 @@ void	ft_execve(t_cmd *cmd, int opt)
 	char	*cmd_path;
 
 	utils.input_fd = 0;
-	utils.output_fd = 0;
+	utils.output_fd = 1;
 	if (cmd->delimiter && opt)
 		utils.herdoc_fd = open_herdoc(cmd);
 	if (!opener(cmd, &utils))
@@ -100,7 +96,8 @@ void	ft_execve(t_cmd *cmd, int opt)
 	ft_isdir(cmd->cmd[0], 0);
 	cmd_path = getpath(cmd->cmd[0], ft_split(getenv("PATH"), ':'));
 	ft_isdir(cmd_path, 1);
-	setfds(&utils, cmd);
+	setfds(&utils, cmd, opt);
 	execve(cmd_path, cmd->cmd, env_to_arr());
+	dprintf(2,"OUT OF EXECVE\n");
 	unsetfds(&utils);
 }

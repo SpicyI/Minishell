@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:01:29 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/08 17:26:27 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:03:19 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	unset_env(char *name)
 	t_env	*tmp;
 	t_env	*prev;
 
-	tmp = g_gfl->env;
+	tmp = g_gfl.env;
 	prev = 0;
 	while (tmp)
 	{
@@ -26,7 +26,7 @@ int	unset_env(char *name)
 			if (prev)
 				prev->next = tmp->next;
 			else
-				g_gfl->env = tmp->next;
+				g_gfl.env = tmp->next;
 			free_env_node(tmp);
 			return (1);
 		}
@@ -41,7 +41,7 @@ int	unset_export(char *name)
 	t_export	*tmp;
 	t_export	*prev;
 
-	tmp = g_gfl->exp;
+	tmp = g_gfl.exp;
 	prev = 0;
 	while (tmp)
 	{
@@ -50,7 +50,7 @@ int	unset_export(char *name)
 			if (prev)
 				prev->next = tmp->next;
 			else
-				g_gfl->exp = tmp->next;
+				g_gfl.exp = tmp->next;
 			free_export_node(tmp);
 			return (1);
 		}
@@ -65,7 +65,7 @@ int	unset_not_env(char *name)
 	t_not_env	*tmp;
 	t_not_env	*prev;
 
-	tmp = g_gfl->not_env;
+	tmp = g_gfl.not_env;
 	prev = 0;
 	while (tmp)
 	{
@@ -74,7 +74,7 @@ int	unset_not_env(char *name)
 			if (prev)
 				prev->next = tmp->next;
 			else
-				g_gfl->not_env = tmp->next;
+				g_gfl.not_env = tmp->next;
 			free_not_env_node(tmp);
 			return (1);
 		}
@@ -118,21 +118,21 @@ int	unset(char **args)
 // 	t_env *head;
 //     char *exp[] = {"driss", "dr=iss", "peace",0};
 // 	char **arg;
-// 	g_gfl->exp = 0;
-// 	g_gfl->not_env = 0;
+// 	g_gfl.exp = 0;
+// 	g_gfl.not_env = 0;
 // 	arg = ft_split(env[0], '=');
-// 	g_gfl->env = ft_envnew(arg);
+// 	g_gfl.env = ft_envnew(arg);
 // 	free(arg);
-// 	head = g_gfl->env;
+// 	head = g_gfl.env;
 // 	env++;
 // 	while (*env)
 // 	{
 // 		arg = ft_split(*env, '=');
-// 		ft_envadd_back(&g_gfl->env, ft_envnew(arg));
+// 		ft_envadd_back(&g_gfl.env, ft_envnew(arg));
 // 		free(arg);
 // 		env++;
 // 	}
-// 		g_gfl->env = 0;
+// 		g_gfl.env = 0;
 //     //export(exp);
 // 	//unset(av + 1);
 //     sleep(2);

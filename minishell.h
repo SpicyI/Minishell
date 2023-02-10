@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 15:16:53 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 22:01:40 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ int						opener(t_cmd *cmd, t_built *utils);
 
 /*				execution 	*/
 void					executor(t_cmds *cmds);
-int						builtin(t_cmd *cmd);
+int						builtin(t_cmd *cmd, int opt);
 void					unsetfds(t_built *utils);
 void					setfds(t_built *utils, t_cmd *cmd, int  opt);
 int						pipeline(t_cmd *cmds, int num_of_cmds);

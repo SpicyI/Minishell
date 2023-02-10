@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 17:18:24 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/09 18:03:19 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 21:55:25 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ int	export_type(char **tab)
 
 int	export(char **str)
 {
+	int		sts;
+
+	sts = 0;	
 	if (!str || !*str)
 	{
 		printexport();
@@ -90,9 +93,9 @@ int	export(char **str)
 	while (*str)
 	{
 		if (ft_strchr(*str, '='))
-			return (exporter(ft_export_spliter(ft_strdup(*str))));
+			sts = exporter(ft_export_spliter(ft_strdup(*str)));
 		else
-			return (importer(ft_strdup(*str)));
+			sts = importer(ft_strdup(*str));
 		str++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 19:57:54 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 15:17:23 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 22:02:06 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_match	*init(void)
 	return (ref);
 }
 
-int	builtin(t_cmd *cmd)
+int	builtin(t_cmd *cmd, int opt)
 {
 	t_match	*ref;
 	t_built	utils;
@@ -45,11 +45,11 @@ int	builtin(t_cmd *cmd)
 	utils.input_fd = 0;
 	utils.output_fd = 0;
 	ref = init();
-	if (cmd->delimiter)
+	if (cmd->delimiter && opt)
 		utils.herdoc_fd = open_herdoc(cmd);
 	if (!opener(cmd, &utils))
 		return (1);
-	setfds(&utils, cmd, HERDOC_ON);
+	setfds(&utils, cmd, opt);
 	while (ref[++i].name)
 	{
 		if (!ft_strncmp(cmd->cmd[0], ref[i].name, 0))
@@ -68,7 +68,7 @@ void	executor(t_cmds *cmds)
 	if (!cmds || !cmds->line || cmds->size <= 0)
 		return ;
 	if (cmds->size == 1 && cmds->line->is_built_in)
-		g_gfl.exit = builtin(cmds->line);
+		g_gfl.exit = builtin(cmds->line, HERDOC_ON);
 	else if (cmds->size == 1 && !cmds->line->is_built_in)
 		g_gfl.exit = single_cmd(cmds->line);
 	else if (cmds->size > 1)

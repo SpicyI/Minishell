@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 22:01:40 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 22:29:24 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ char					*getpath(char *cmd, char **path);
 char					*check_abs_path(char *cmd);
 int						ft_exitstatus(int status);
 void					ft_isdir(char *cmd, int opt);
+void                    cmd_error(char *cmd);
 /*				herdoc		*/
 int						herdoc(char *delmiter, int opt);
 

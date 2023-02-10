@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:12:37 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 00:31:47 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 22:23:19 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	open_herdoc(t_cmd *cmd)
 	}
 	if (cmd->last_in == HERDOC_FD)
 		fd = herdoc(cmd->delimiter[i], HERDOC_ON);
-	else 
+	else
 		fd = herdoc(cmd->delimiter[i], HERDOC_OFF);
 	return (fd);
 }

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:47:13 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 22:09:39 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 22:32:14 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	ft_waitall(pid_t *id, int num_of_cmds)
 
 int	pipeline(t_cmd *cmds, int num_of_cmds)
 {
-	pid_t *id;
-	t_built utils;
-	int *herdocs;
-	int i;
+	pid_t	*id;
+	t_built	utils;
+	int		*herdocs;
+	int		i;
 
 	utils.status = 0;
 	utils.input_fd = 0;
@@ -36,15 +36,12 @@ int	pipeline(t_cmd *cmds, int num_of_cmds)
 	utils.default_fd[1] = dup(1);
 	id = (pid_t *)ft_calloc(num_of_cmds + 1, sizeof(pid_t));
 	herdocs = (int *)ft_calloc(num_of_cmds, sizeof(int));
-	//openeing all herdoc files
-
 	while (++i < num_of_cmds)
 		herdocs[i] = open_herdoc(cmds + i);
 	i = -1;
 	while (++i < num_of_cmds)
 	{
 		pipe(utils.b_pipe);
-		//executing cmd
 		id[i] = fork();
 		if (id[i] == -1)
 			return (printf("fork error\n"));
@@ -56,7 +53,6 @@ int	pipeline(t_cmd *cmds, int num_of_cmds)
 				close(utils.b_pipe[1]);
 				close(utils.b_pipe[0]);
 			}
-			//last cmd
 			else if (i == num_of_cmds - 1)
 			{
 				dup2(utils.input_fd, 0);
@@ -64,7 +60,6 @@ int	pipeline(t_cmd *cmds, int num_of_cmds)
 				close(utils.b_pipe[0]);
 				close(utils.b_pipe[1]);
 			}
-			//middle cmds
 			else
 			{
 				if (!(cmds + i)->input)
@@ -79,20 +74,16 @@ int	pipeline(t_cmd *cmds, int num_of_cmds)
 					close(utils.b_pipe[1]);
 				}
 			}
-			// set herdoc input
 			if ((cmds + i)->delimiter)
 			{
 				close(utils.b_pipe[0]);
 				dup2(herdocs[i], 0);
 				close(herdocs[i]);
 			}
-			if ((cmds +i)->is_built_in)
+			if ((cmds + i)->is_built_in)
 				exit(builtin(cmds + i, HERDOC_OFF));
 			ft_execve(cmds + i, HERDOC_OFF);
 		}
-		//reset stdin and stdout
-		// close(utils.b_pipe[1]);
-		// close(utils.b_pipe[0]);
 		close(utils.b_pipe[1]);
 		utils.input_fd = utils.b_pipe[0];
 		close(utils.b_pipe[0]);

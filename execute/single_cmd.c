@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:02:06 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 21:48:30 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 22:29:05 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*getpath(char *cmd, char **path)
 
 	check = NULL;
 	if (path && ft_strchr(cmd, '/'))
-		check  = check_abs_path(cmd);
+		check = check_abs_path(cmd);
 	if (check)
 		return (check);
 	while (path && *path && *cmd)
@@ -77,11 +77,7 @@ char	*getpath(char *cmd, char **path)
 		free(check);
 		path++;
 	}
-	if (ft_strchr(cmd, '/'))
-		printf("%s : No such file or directory\n", cmd);
-	else
-		printf("%s : command not found\n", cmd);
-	exit(127);
+	cmd_error(cmd);
 	return (NULL);
 }
 

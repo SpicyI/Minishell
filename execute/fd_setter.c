@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:23:12 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 21:58:46 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 22:24:46 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ void	setfds(t_built *utils, t_cmd *cmd, int opt)
 			close(utils->herdoc_fd);
 	}
 	if (cmd->append || cmd->output)
-	{
-		dup2(utils->output_fd, 1);
-		close(utils->output_fd);
-	}
+		((dup2(utils->output_fd, 1) || 1) && close(utils->output_fd));
 }
 
 void	unsetfds(t_built *utils)

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:39:33 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/09 18:48:11 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 22:31:26 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,13 @@ int	openoutputs_append(t_cmd *cmd)
 		i++;
 	}
 	return (-2);
+}
+
+void	cmd_error(char *cmd)
+{
+	if (ft_strchr(cmd, '/'))
+		printf("%s : No such file or directory\n", cmd);
+	else
+		printf("%s : command not found\n", cmd);
+	exit(127);
 }

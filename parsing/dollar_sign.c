@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 00:09:50 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/10 17:23:47 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 21:51:13 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,16 @@ void	ft_find_env(char **array)
 			array[i] = ft_replace_env(array[i], 0, 0, 0);
 			free(holder);
 		}
-		else if (array[i][0] == '~' && ft_strlen(array[i]) == 1)
-			array[i] = ft_hyphen(array[i]);
+		else if (array[i][0] == '~')
+		{
+			if (ft_strlen(array[i]) == 1)
+				array[i] = ft_hyphen(array[i]);
+			else if (array[i][1] == '/')
+			{
+				holder = ft_strdup(array[i] + 1);
+				array[i] = ft_strjoin(ft_hyphen(array[i]), holder);
+			}
+		}
 		i++;
 	}
 }
@@ -68,7 +76,7 @@ char	*ft_get_env(char *str, int i)
 	char	*name;
 
 	if (str[i] == ' ' || str[i] == 0)
-		return ("$");
+		return (ft_strdup("$"));
 	else if (str[i] == '?')
 		return (ft_itoa(g_gfl.exit));
 	j = i;
@@ -115,7 +123,7 @@ char	*ft_hyphen(char *str)
 		if (ft_strcmp(envi->name, "HOME"))
 		{
 			free(str);
-			return (envi->value);
+			return (ft_strdup(envi->value));
 		}
 		envi = envi->next;
 	}

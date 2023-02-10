@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:02:04 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/10 17:23:47 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 21:51:32 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_clean_join(char *str, char *str2)
 char	*ft_color(int i)
 {
 	if (i)
-		return (readline("\033[0;35mWEIRDOO$ \033[0m"));
+		return (readline("\033[0;35mMinishell$ \033[0m"));
 	else
 		return (readline("\033[0;35m> \033[0m"));
 }

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:02:06 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 16:31:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 21:48:30 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ char	*getpath(char *cmd, char **path)
 {
 	char	*check;
 
-	check  = check_abs_path(cmd);
+	check = NULL;
+	if (path && ft_strchr(cmd, '/'))
+		check  = check_abs_path(cmd);
 	if (check)
 		return (check);
 	while (path && *path && *cmd)
@@ -75,7 +77,10 @@ char	*getpath(char *cmd, char **path)
 		free(check);
 		path++;
 	}
-	printf("%s : command not found\n", cmd);
+	if (ft_strchr(cmd, '/'))
+		printf("%s : No such file or directory\n", cmd);
+	else
+		printf("%s : command not found\n", cmd);
 	exit(127);
 	return (NULL);
 }
@@ -94,10 +99,10 @@ void	ft_execve(t_cmd *cmd, int opt)
 	if (!cmd->cmd)
 		exit(0);
 	ft_isdir(cmd->cmd[0], 0);
-	cmd_path = getpath(cmd->cmd[0], ft_split(getenv("PATH"), ':'));
+	cmd_path = getpath(cmd->cmd[0], ft_split(ft_getenv("PATH"), ':'));
 	ft_isdir(cmd_path, 1);
 	setfds(&utils, cmd, opt);
 	execve(cmd_path, cmd->cmd, env_to_arr());
-	dprintf(2,"OUT OF EXECVE\n");
+	exit(0);
 	unsetfds(&utils);
 }

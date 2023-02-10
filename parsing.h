@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:57:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/10 17:27:33 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 23:21:48 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_builtin
 	int					output_fd;
 	int					herdoc_fd;
 	int					status;
+	int					cmd_num;
 	int					default_fd[2];
 	int					b_pipe[2];
 }						t_built;

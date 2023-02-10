@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 17:18:24 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 21:55:25 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/10 23:17:45 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	export(char **str)
 {
 	int		sts;
 
-	sts = 0;	
+	sts = 0;
 	if (!str || !*str)
 	{
 		printexport();

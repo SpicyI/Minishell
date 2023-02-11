@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 16:34:15 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:41:05 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ int						herdoc(char *delmiter, int opt);
 /*				closer.c*/
 void					close_fds(int *fds, int i, int opt);
 int						closer(t_cmd *cmd, int *input_fds, int *output_fds);
+int close_pipeline(t_built *utils, pid_t *id, int *herdocs);
 
 /*				opener.c */
 int						open_herdoc(t_cmd *cmd);

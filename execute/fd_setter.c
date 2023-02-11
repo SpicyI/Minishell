@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:23:12 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 16:34:18 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:48:56 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@ void	setfds(t_built *utils, t_cmd *cmd, int opt)
 	utils->default_fd[0] = dup(0);
 	utils->default_fd[1] = dup(1);
 	if (opt == HERDOC_OFF)
-		pipe_set(utils, cmd);
+	{
+		if (cmd->delimiter)
+			pipe_set(utils, cmd);
+		else
+			default_set(utils, cmd);
+	}
 	else if (opt == HERDOC_ON)
 		default_set(utils, cmd);
 }

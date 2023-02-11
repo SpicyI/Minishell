@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:01:29 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/09 18:03:19 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:42:11 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	unset(char **args)
 		str = ft_strdup(*args);
 		if (!check_name(str, 0))
 		{
-			printf("unset: %s: not a valid identifier\n", str);
+			ft_dprintf(UNVALID_ID_SET, str);
 			status = 1;
 			free(str);
 			args++;
@@ -109,34 +109,3 @@ int	unset(char **args)
 	}
 	return (status);
 }
-
-// int	main(int ac, char **av, char **env)
-// {
-// 	if (!env || !*env)
-// 		return (printf("no env\n"));
-
-// 	t_env *head;
-//     char *exp[] = {"driss", "dr=iss", "peace",0};
-// 	char **arg;
-// 	g_gfl.exp = 0;
-// 	g_gfl.not_env = 0;
-// 	arg = ft_split(env[0], '=');
-// 	g_gfl.env = ft_envnew(arg);
-// 	free(arg);
-// 	head = g_gfl.env;
-// 	env++;
-// 	while (*env)
-// 	{
-// 		arg = ft_split(*env, '=');
-// 		ft_envadd_back(&g_gfl.env, ft_envnew(arg));
-// 		free(arg);
-// 		env++;
-// 	}
-// 		g_gfl.env = 0;
-//     //export(exp);
-// 	//unset(av + 1);
-//     sleep(2);
-// 	export(0);
-// 	system("leaks unseter");
-// 	return (0);
-// }

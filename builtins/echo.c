@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 18:31:50 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/09 21:38:58 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:20:54 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	echo(char **str)
 	int	n;
 
 	n = 0;
-	if (is_option(*str))
+	while (is_option(*str))
 	{
 		n = 1;
 		str++;

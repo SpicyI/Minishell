@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 19:57:54 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 22:02:06 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:20:24 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,5 @@ void	executor(t_cmds *cmds)
 	else if (cmds->size == 1 && !cmds->line->is_built_in)
 		g_gfl.exit = single_cmd(cmds->line);
 	else if (cmds->size > 1)
-	{
 		g_gfl.exit = pipeline(cmds->line, cmds->size);
-	}
 }

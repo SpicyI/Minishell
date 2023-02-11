@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:39:33 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 22:31:26 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:46:58 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	openoutputs_trunc(t_cmd *cmd)
 		fd = open(cmd->output[i], O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (fd < 0)
 		{
-			printf("%s: Permission denied", cmd->output[i]);
+			ft_dprintf(PERMISSION_DENIED, cmd->output[i]);
 			return (-1);
 		}
 		if (!cmd->output[i + 1] && cmd->last_out == TRUNC)
@@ -45,7 +45,7 @@ int	openoutputs_append(t_cmd *cmd)
 		fd = open(cmd->append[i], O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (fd < 0)
 		{
-			printf("%s: Permission denied", cmd->append[i]);
+			ft_dprintf(PERMISSION_DENIED, cmd->append[i]);
 			return (-1);
 		}
 		if (!cmd->append[i + 1] && cmd->last_out == APPEND)
@@ -59,8 +59,8 @@ int	openoutputs_append(t_cmd *cmd)
 void	cmd_error(char *cmd)
 {
 	if (ft_strchr(cmd, '/'))
-		printf("%s : No such file or directory\n", cmd);
+		ft_dprintf(NO_SUCH_FILE, cmd);
 	else
-		printf("%s : command not found\n", cmd);
+		ft_dprintf(COMMAND_NOT_FOUND, cmd);
 	exit(127);
 }

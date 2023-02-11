@@ -1,39 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   shell_vars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/13 16:24:41 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 18:27:16 by del-khay         ###   ########.fr       */
+/*   Created: 2023/02/11 18:01:10 by del-khay          #+#    #+#             */
+/*   Updated: 2023/02/11 18:23:48 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strjoin(char *dst, char *src)
-{
-	char	*rst;
-	int		i;
+// int add_to_shellvars(char)
+// {
 
-	i = 0;
-	if (!dst)
-	{
-		dst = ft_calloc(1, sizeof(char));
-		if (!dst)
-			return (0);
-	}
-	rst = ft_calloc(ft_strlen(dst) + ft_strlen(src) + 1, sizeof(char));
-	if (!rst)
-		return (0);
-	while (dst && dst[i])
-	{
-		rst[i] = dst[i];
-		i++;
-	}
-	while (src && *src)
-		rst[i++] = *src++;
-	free(dst);
-	return (rst);
-}
+// }

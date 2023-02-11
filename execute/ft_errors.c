@@ -6,17 +6,23 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:32:39 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 17:00:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:58:41 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int ft_return_error(int opt, char *str, int ret)
-// {
-//     int std_out;
-//     std_out = dup(1);
-//     dup2(2, 1);
-//     dup2(std_out, 1);
-//     return (ret);
-// }
+int	ft_dprintf(char *format, char *str)
+{
+	int	tmp_stdout;
+
+	tmp_stdout = dup(1);
+	dup2(STDERR_FILENO, 1);
+	if (str)
+		printf(format, str);
+	else
+		printf("%s", format);
+	dup2(tmp_stdout, 1);
+	close(tmp_stdout);
+	return (0);
+}

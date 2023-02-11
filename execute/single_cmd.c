@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:02:06 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 16:36:38 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 19:18:19 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,19 @@ int	ft_exitstatus(int status)
 int	single_cmd(t_cmd *cmd)
 {
 	int		status;
-	pid_t	id;
+	pid_t	*id;
 
-	id = fork();
-	if (id == -1)
-		return (printf("fork error\n"));
-	if (!id)
+	signal(SIGINT, sigint_handler);
+	id = malloc(sizeof(pid_t) * 1);
+	g_gfl.pid = id;
+	id[0] = fork();
+	if (id[0] == -1)
+		return (ft_dprintf("fork error\n", NULL));
+	if (!id[0])
 		ft_execve(cmd, HERDOC_ON);
-	waitpid(id, &status, 0);
+	waitpid(id[0], &status, 0);
+	free(id);
+	g_gfl.pid = NULL;
 	return (ft_exitstatus(status));
 }
 
@@ -70,7 +75,7 @@ char	*getpath(char *cmd, char **path)
 		{
 			if (!access(check, X_OK))
 				return (check);
-			printf("%s : Permission denied\n", cmd);
+			ft_dprintf(PERMISSION_DENIED, cmd);
 			free(check);
 			exit(126);
 		}

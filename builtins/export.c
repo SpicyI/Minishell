@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 17:18:24 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 23:17:45 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:40:39 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,32 +100,3 @@ int	export(char **str)
 	}
 	return (0);
 }
-
-// int	main(int ac, char **av, char **env)
-// {
-// 	if (!env || !*env)
-// 		return (printf("no env\n"));
-
-// 	t_env *head;
-// 	char **arg;
-// 	g_gfl.exp = 0;
-// 	g_gfl.not_env = 0;
-// 	arg = ft_split(env[0], '=');
-// 	g_gfl.env = ft_envnew(arg);
-// 	free(arg);
-// 	head = g_gfl.env;
-// 	env++;
-// 	while (*env)
-// 	{
-// 		arg = ft_split(*env, '=');
-// 		ft_envadd_back(&g_gfl.env, ft_envnew(arg));
-// 		free(arg);
-// 		env++;
-// 	}
-// 	g_gfl.env = head;
-// 	export(av + 1);
-// 	sleep(2);
-// 	export(0);
-// 	system("leaks exprt");
-// 	return (0);
-// }

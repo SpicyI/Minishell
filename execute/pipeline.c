@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:47:13 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 16:59:48 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:48:18 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int	pipeline(t_cmd *cmds, int num_of_cmds)
 	while (++i < num_of_cmds)
 	{
 		if (pipe(utils.b_pipe) == -1)
-			return (printf("pipe error\n"));
+			return (ft_dprintf("pipe error\n", NULL));
 		id[i] = fork();
 		if (id[i] == -1)
-			return (printf("fork error\n"));
+			return (ft_dprintf("fork error\n", NULL));
 		if (!id[i])
 			child_process(cmds, &utils, herdocs, i);
 		close(utils.b_pipe[1]);

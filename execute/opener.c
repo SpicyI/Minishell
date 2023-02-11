@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:12:37 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 16:12:26 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:56:30 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	openinputs(char **in_files)
 		fd = open(in_files[i], O_RDONLY);
 		if (fd < 0)
 		{
-			printf("%s: No such file or directory", in_files[i]);
+			ft_dprintf(NO_SUCH_FILE, in_files[i]);
 			return (-1);
 		}
 		if (!in_files[i + 1])
@@ -70,9 +70,11 @@ int	opener(t_cmd *cmd, t_built *utils)
 {
 	if (cmd->input)
 		utils->input_fd = openinputs(cmd->input);
+	if (utils->input_fd < 0)
+		return (0);
 	if (cmd->output || cmd->append)
 		utils->output_fd = openoutputs(cmd);
-	if (utils->input_fd < 0 && utils->output_fd < 0)
+	if (utils->output_fd < 0)
 		return (0);
 	return (1);
 }

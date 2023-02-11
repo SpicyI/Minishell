@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:22:16 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/09 19:05:07 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:49:57 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	ft_isdir(char *cmd, int opt)
 	{
 		if (ft_strchr(cmd, '/') && opt == 0)
 		{
-			printf("%s : is a directory\n", cmd);
+			ft_dprintf(NOT_A_DIRECTORY, cmd);
 			exit(126);
 		}
 		else if (opt)
 		{
-			printf("%s : command not found\n", cmd);
+			ft_dprintf(COMMAND_NOT_FOUND, cmd);
 			exit(127);
 		}
 		closedir(dir);
@@ -74,7 +74,7 @@ char	*check_abs_path(char *cmd)
 	{
 		if (!access(cmd, X_OK))
 			return (cmd);
-		printf("%s : Permission denied\n", cmd);
+		ft_dprintf(PERMISSION_DENIED, cmd);
 		exit(126);
 	}
 	return (NULL);

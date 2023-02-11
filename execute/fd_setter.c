@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 23:23:12 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 16:48:56 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:00:06 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	pipe_set(t_built *utils, t_cmd *cmd)
 		((dup2(utils->output_fd, 1) || 1) && close(utils->output_fd));
 }
 
-void 	default_set(t_built *utils, t_cmd *cmd)
+void	default_set(t_built *utils, t_cmd *cmd)
 {
 	if (cmd->last_in == HERDOC_FD)
 	{

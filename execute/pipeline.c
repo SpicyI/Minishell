@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:47:13 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 16:40:33 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:59:48 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,27 @@ void	ft_waitall(pid_t *id, int num_of_cmds)
 		waitpid(id[i], &status, 0);
 }
 
+void	init_pipeline(t_built *utils, int num_of_cmds)
+{
+	utils->status = 0;
+	utils->input_fd = 0;
+	utils->cmd_num = num_of_cmds;
+	utils->default_fd[0] = dup(0);
+	utils->default_fd[1] = dup(1);
+}
+
+int	*init_herdocs(t_cmd *cmds, int num_of_cmds)
+{
+	int	*herdocs;
+	int	i;
+
+	i = -1;
+	herdocs = (int *)ft_calloc(num_of_cmds, sizeof(int));
+	while (++i < num_of_cmds)
+		herdocs[i] = open_herdoc(cmds + i);
+	return (herdocs);
+}
+
 int	pipeline(t_cmd *cmds, int num_of_cmds)
 {
 	pid_t	*id;
@@ -29,17 +50,10 @@ int	pipeline(t_cmd *cmds, int num_of_cmds)
 	int		*herdocs;
 	int		i;
 
-	utils.status = 0;
-	utils.input_fd = 0;
-	utils.cmd_num = num_of_cmds;
 	i = -1;
-	utils.default_fd[0] = dup(0);
-	utils.default_fd[1] = dup(1);
+	init_pipeline(&utils, num_of_cmds);
 	id = (pid_t *)ft_calloc(num_of_cmds + 1, sizeof(pid_t));
-	herdocs = (int *)ft_calloc(num_of_cmds, sizeof(int));
-	while (++i < num_of_cmds)
-		herdocs[i] = open_herdoc(cmds + i);
-	i = -1;
+	herdocs = init_herdocs(cmds, num_of_cmds);
 	while (++i < num_of_cmds)
 	{
 		if (pipe(utils.b_pipe) == -1)
@@ -68,7 +82,7 @@ void	child_process(t_cmd *cmds, t_built *utils, int *herdocs, int i)
 		set_middle(utils, cmds + i);
 	if ((cmds + i)->delimiter)
 	{
-		if ((cmds +i)->last_in == HERDOC_FD)
+		if ((cmds + i)->last_in == HERDOC_FD)
 		{
 			close(utils->b_pipe[0]);
 			close(utils->input_fd);

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 22:29:24 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:34:15 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,8 +197,15 @@ void					unsetfds(t_built *utils);
 void					setfds(t_built *utils, t_cmd *cmd, int  opt);
 int						pipeline(t_cmd *cmds, int num_of_cmds);
 void					ft_waitall(pid_t *id, int num_of_cmds);
+void	                child_process(t_cmd *cmds, t_built *utils, int *herdocs, int i);
 
 /*				single_cmd*/
 void					ft_execve(t_cmd *cmd, int opt);
 int						single_cmd(t_cmd *cmd);
+/*                  redirections                */
+void	set_last(t_built *utils, t_cmd *cmd);
+void	set_first(t_built *utils, t_cmd *cmd);
+void	set_middle(t_built *utils, t_cmd *cmd);
+void 	default_set(t_built *utils, t_cmd *cmd);
+void	pipe_set(t_built *utils, t_cmd *cmd);
 #endif

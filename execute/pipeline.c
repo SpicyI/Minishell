@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:47:13 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 00:19:30 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 15:06:16 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,65 +48,7 @@ int	pipeline(t_cmd *cmds, int num_of_cmds)
 		if (id[i] == -1)
 			return (printf("fork error\n"));
 		if (!id[i])
-		{
-			if (i == 0)
-			{
-				dup2(utils.b_pipe[1], 1);
-				close(utils.b_pipe[1]);
-				close(utils.b_pipe[0]);
-				close(utils.default_fd[0]);
-				if ((cmds + i)->append || (cmds + i)->output)
-					close(utils.default_fd[1]);
-			}
-			else if (i == num_of_cmds - 1)
-			{
-				dup2(utils.input_fd, 0);
-				close(utils.input_fd);
-				close(utils.b_pipe[0]);
-				close(utils.b_pipe[1]);
-				if ((cmds + i)->input || (cmds + i)->delimiter)
-				{
-					close(utils.default_fd[0]);
-					close(utils.input_fd);
-				}
-				if (cmds->append || cmds->output)
-					close(utils.default_fd[1]);
-			}
-			else
-			{
-				if (!(cmds + i)->input)
-				{
-					dup2(utils.input_fd, 0);
-					close(utils.input_fd);
-					close(utils.b_pipe[0]);
-				}
-				else
-				{
-					close(utils.default_fd[0]);
-					close(utils.input_fd);
-					close(utils.b_pipe[0]);
-				}
-				if (!(cmds + i)->output && !(cmds + i)->append)
-				{
-					dup2(utils.b_pipe[1], 1);
-					close(utils.b_pipe[1]);
-				}
-				else
-				{
-					close(utils.default_fd[1]);
-					close(utils.b_pipe[1]);
-				}
-			}
-			if ((cmds + i)->delimiter)
-			{
-				close(utils.b_pipe[0]);
-				dup2(herdocs[i], 0);
-				close(herdocs[i]);
-			}
-			if ((cmds + i)->is_built_in)
-				exit(builtin(cmds + i, HERDOC_OFF));
-			ft_execve(cmds + i, HERDOC_OFF);
-		}
+			child_process(cmds, &utils, herdocs, i);
 		close(utils.b_pipe[1]);
 		close(utils.input_fd);
 		utils.input_fd = utils.b_pipe[0];
@@ -124,33 +66,29 @@ int	pipeline(t_cmd *cmds, int num_of_cmds)
 	return (ft_exitstatus(utils.status));
 }
 
-void	set_redirections(t_cmd *cmds, int  i, t_built *utils)
+void	child_process(t_cmd *cmds, t_built *utils, int *herdocs, int i)
 {
 	if (i == 0)
-	{
-		dup2(utils->b_pipe[1], 1);
-		close(utils->b_pipe[1]);
-		close(utils->b_pipe[0]);
-	}
+		set_first(utils, cmds + i);
 	else if (i == utils->cmd_num - 1)
-	{
-		dup2(utils->input_fd, 0);
-		close(utils->input_fd);
-		close(utils->b_pipe[0]);
-		close(utils->b_pipe[1]);
-	}
+		set_last(utils, cmds + i);
 	else
+		set_middle(utils, cmds + i);
+	if ((cmds + i)->delimiter)
 	{
-		if (!(cmds + i)->input)
+		if ((cmds +i)->last_in == HERDOC_FD)
 		{
-			dup2(utils->input_fd, 0);
-			close(utils->input_fd);
 			close(utils->b_pipe[0]);
+			close(utils->input_fd);
+			dup2(herdocs[i], 0);
+			close(herdocs[i]);
 		}
-		if (!(cmds + i)->output && !(cmds + i)->append)
+		else
 		{
-			dup2(utils->b_pipe[1], 1);
-			close(utils->b_pipe[1]);
+			close(herdocs[i]);
 		}
 	}
+	if ((cmds + i)->is_built_in)
+		exit(builtin(cmds + i, HERDOC_OFF));
+	ft_execve(cmds + i, HERDOC_OFF);
 }

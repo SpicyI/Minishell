@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:02:06 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/10 22:29:05 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:22:50 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	ft_execve(t_cmd *cmd, int opt)
 		utils.herdoc_fd = open_herdoc(cmd);
 	if (!opener(cmd, &utils))
 		exit(1);
+	// dprintf(2," >start\n");
+	// dprintf(2,"line(%d) = %s",getpid(),get_next_line(0));
 	if (!cmd->cmd)
 		exit(0);
 	ft_isdir(cmd->cmd[0], 0);

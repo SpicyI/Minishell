@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:01:10 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 23:08:58 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 00:19:47 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,24 @@ int	has_shell_var(char **str)
 
 void	ft_clean_cmd(t_cmd *cmd , int n)
 {
-	int i;
 	int j;
 	char **tmp;
 
-	i = n;
 	j = 0;
-	tmp = (char **)ft_calloc(ft_arrlen(cmd->cmd) - i + 1, sizeof(char *));
-	while (cmd->cmd[i])
+	if (!n)
+		return ;
+	tmp = (char **)ft_calloc(ft_arrlen(cmd->cmd) - n + 1, sizeof(char *));
+	while (cmd->cmd[n])
 	{
-		tmp[j] = ft_strdup(cmd->cmd[i]);
+		tmp[j] = ft_strdup(cmd->cmd[n]);
 		j++;
-		i++;
+		n++;
 	}
-	i = 0;
-	while (cmd->cmd[i])
+	n = -1;
+	while (cmd->cmd[++n])
 	{
-		free(cmd->cmd[i]);
-		cmd->cmd[i] = NULL;
-		i++;
+		free(cmd->cmd[n]);
+		cmd->cmd[n] = NULL;
 	}
 	free(cmd->cmd);
 	cmd->cmd = tmp;
@@ -103,7 +102,6 @@ void sender(t_cmd *cmd)
         free(tmp);
         i++;
     }
-    cmd->is_built_in = 0;
     ft_clean_cmd(cmd, i);
 }
 

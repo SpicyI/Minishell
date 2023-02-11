@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:57:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/11 18:46:44 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 19:45:21 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_line
 	char				*pipeline_error;
 	int					p_error_index;
 	pid_t				*pid;
+	int					crp;
 }						t_line;
 
 t_line					g_gfl;

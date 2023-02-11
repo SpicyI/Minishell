@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:47:13 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 17:48:18 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 19:46:32 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	pipeline(t_cmd *cmds, int num_of_cmds)
 	i = -1;
 	init_pipeline(&utils, num_of_cmds);
 	id = (pid_t *)ft_calloc(num_of_cmds + 1, sizeof(pid_t));
+	g_gfl.pid = id;
+	g_gfl.crp = num_of_cmds;
 	herdocs = init_herdocs(cmds, num_of_cmds);
 	while (++i < num_of_cmds)
 	{

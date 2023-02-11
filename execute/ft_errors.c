@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:32:39 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 17:58:41 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 19:54:45 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	ft_dprintf(char *format, char *str)
 	int	tmp_stdout;
 
 	tmp_stdout = dup(1);
+	printf("\033[0;31m"); 
 	dup2(STDERR_FILENO, 1);
 	if (str)
 		printf(format, str);
@@ -24,5 +25,6 @@ int	ft_dprintf(char *format, char *str)
 		printf("%s", format);
 	dup2(tmp_stdout, 1);
 	close(tmp_stdout);
+	printf("\033[0m");
 	return (0);
 }

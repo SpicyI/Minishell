@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 19:57:54 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 18:20:24 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 21:14:32 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	executor(t_cmds *cmds)
 {
 	if (!cmds || !cmds->line || cmds->size <= 0)
 		return ;
+	shell_env_set(cmds->line, cmds->size);
 	if (cmds->size == 1 && cmds->line->is_built_in)
 		g_gfl.exit = builtin(cmds->line, HERDOC_ON);
 	else if (cmds->size == 1 && !cmds->line->is_built_in)

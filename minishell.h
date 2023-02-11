@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 19:07:22 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 21:50:04 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,12 @@ int			env(void);
 
 /*			exit			*/
 int			shell_exit(char **args);
-
+int has_shell_var(char **str);
+void shell_env_set(t_cmd *cmd, int cmd_n);
 /***************************************************/
 //this part is for the execution of the commands
+/*              cmd analyzing       */
+void ft_clean_cmd(t_cmd *cmd);
 /*  innit ref to builtins functs */
 t_match		*init(void);
 int			ft_envlen(t_env *env);

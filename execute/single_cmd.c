@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:02:06 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 19:18:19 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 19:47:19 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	single_cmd(t_cmd *cmd)
 	int		status;
 	pid_t	*id;
 
-	signal(SIGINT, sigint_handler);
 	id = malloc(sizeof(pid_t) * 1);
 	g_gfl.pid = id;
+	g_gfl.crp = 1;
 	id[0] = fork();
 	if (id[0] == -1)
 		return (ft_dprintf("fork error\n", NULL));

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 21:50:04 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 22:50:11 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,12 @@ t_export	*ft_exportnew(char *content);
 t_env		*ft_envnew(char **content);
 void		ft_envadd_back(t_env **alst, t_env *new);
 void		ft_exportadd_back(t_export **alst, t_export *new);
+void	ft_not_envadd_back(t_not_env **alst, t_not_env *new);
+t_not_env	*ft_not_envnew(char **content);
 void		free_not_env_node(t_not_env *node);
 void		free_env_node(t_env *node);
 void		free_export_node(t_export *node);
+void sender(t_cmd *cmd);
 
 /*			unset			*/
 int			unset_env(char *name);
@@ -92,7 +95,7 @@ void shell_env_set(t_cmd *cmd, int cmd_n);
 /***************************************************/
 //this part is for the execution of the commands
 /*              cmd analyzing       */
-void ft_clean_cmd(t_cmd *cmd);
+void ft_clean_cmd(t_cmd *cmd, int n);
 /*  innit ref to builtins functs */
 t_match		*init(void);
 int			ft_envlen(t_env *env);

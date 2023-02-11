@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:11:36 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/04 19:08:21 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/11 22:47:00 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,23 @@ t_export	*ft_exportnew(char *content)
 void	ft_envadd_back(t_env **alst, t_env *new)
 {
 	t_env	*tmp;
+
+	if (!alst || !new)
+		return ;
+	if (!*alst)
+	{
+		*alst = new;
+		return ;
+	}
+	tmp = *alst;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+}
+
+void	ft_not_envadd_back(t_not_env **alst, t_not_env *new)
+{
+	t_not_env	*tmp;
 
 	if (!alst || !new)
 		return ;

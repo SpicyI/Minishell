@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 16:36:46 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:50:49 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define COMMAND_NOT_FOUND "minishell: %s: command not found\n"
 # define NOT_A_DIRECTORY "minishell: %s: Not a directory\n"
 # define HOME_NOT_SET "minishell: cd: HOME not set\n"
+# define OLDPWD_NOT_SET "minishell: cd: OLDPWD not set\n"
 
 /******************************************************/
 /*          echo            */
@@ -51,8 +52,10 @@ int			echo(char **str);
 int			is_option(char *str);
 
 /*          cd              */
-// handle  cd -
 int			cd(char **path);
+void	cd_error(char *path);
+void	set_oldpwd(void);
+void	set_pwd(void);
 
 /*         pwd              */
 int			pwd(void);
@@ -79,6 +82,7 @@ void		free_not_env_node(t_not_env *node);
 void		free_env_node(t_env *node);
 void		free_export_node(t_export *node);
 void		sender(t_cmd *cmd);
+int         is_shell_var(char **tab);
 
 /*			unset			*/
 int			unset_env(char *name);

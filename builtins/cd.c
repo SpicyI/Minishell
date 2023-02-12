@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 19:50:32 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 16:45:57 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:55:13 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,26 @@ void	set_pwd(void)
 	free(current_pwd);
 }
 
+void	cd_error(char *path)
+{
+	if (path && !ft_strncmp(path, "-", 0))
+		ft_dprintf(OLDPWD_NOT_SET, NULL);
+	else
+		ft_dprintf(HOME_NOT_SET, NULL);
+}
 int	cd(char **path)
 {
 	char	*gotothis;
 
 	if (!path || !*path)
 		gotothis = ft_getenv("HOME");
+	else if (!ft_strncmp(*path, "-", 0))
+		gotothis = ft_getenv("OLDPWD");
 	else
 		gotothis = *path;
 	if (!gotothis)
 	{
-		ft_dprintf(HOME_NOT_SET, NULL);
+		cd_error(*path);
 		return (1);
 	}
 	set_oldpwd();

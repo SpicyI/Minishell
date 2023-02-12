@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:01:10 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 17:13:12 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:41:13 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	sender(t_cmd *cmd)
 	while (cmd->cmd[i])
 	{
 		tmp = ft_export_spliter(ft_strdup(cmd->cmd[0]));
-		if (is_not_env(tmp))
+		if (!is_shell_var(tmp))
 			ft_not_envadd_back(&g_gfl.not_env, ft_not_envnew(tmp));
 		else
 			ft_not_envadd_back(&g_gfl.not_env, ft_not_envnew(tmp));
@@ -128,4 +128,33 @@ t_not_env	*ft_not_envnew(char **content)
 	}
 	new_node->next = 0;
 	return (new_node);
+}
+
+int	is_shell_var(char **tab)
+{
+	t_not_env	*tmp;
+	char	*trim;
+
+	tmp = g_gfl.not_env;
+	trim = ft_strtrim(tab[0], "+");
+	while (tmp)
+	{
+		if (!ft_strncmp(trim, tmp->name, 0))
+		{
+			free(trim);
+			free(tmp->value);
+			if (tab[0][ft_strlen(tab[0]) - 1] == '+')
+			{
+				tmp->value = ft_strjoin(ft_strdup(tmp->value), tab[1]);
+				free(tab[1]);
+			}
+			else
+				tmp->value = tab[1];
+			free(tab[0]);
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	free(trim);
+	return (0);
 }

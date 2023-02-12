@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:03:32 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 18:58:05 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 21:03:25 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	sigquit_handler(int sig)
 	int	i;
 
 	i = -1;
-	exit(0);
 	printf("Quit: 3\n");
+	exit(0);
 	if (g_gfl.pid == 0)
 		exit(0);
 	else

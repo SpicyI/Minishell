@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:47:13 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 19:46:32 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 20:46:32 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	pipeline(t_cmd *cmds, int num_of_cmds)
 		if (!id[i])
 			child_process(cmds, &utils, herdocs, i);
 		close(utils.b_pipe[1]);
+		close(herdocs[i]);
 		close(utils.input_fd);
 		utils.input_fd = utils.b_pipe[0];
 		dup2(utils.default_fd[0], 0);
@@ -91,10 +92,14 @@ void	child_process(t_cmd *cmds, t_built *utils, int *herdocs, int i)
 			dup2(herdocs[i], 0);
 			close(herdocs[i]);
 		}
-		else
+		else if((cmds + i)->last_in == INPUT_FD)
 		{
+			close(utils->b_pipe[0]);
+			close(utils->input_fd);
 			close(herdocs[i]);
 		}
+		else
+			close(herdocs[i]);
 	}
 	if ((cmds + i)->is_built_in)
 		exit(builtin(cmds + i, HERDOC_OFF));

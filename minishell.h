@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 19:22:22 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 22:56:29 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,4 +155,11 @@ void		pipe_set(t_built *utils, t_cmd *cmd);
 void		sigint_handler(int sig);
 void        sigquit_handler(int sig);
 void	sigstp_handler(int sig);
+
+/*              bonus*/
+void	ft_replace(t_cmd *cmds, int size);
+void   ft_change_line(t_cmd *cmds, int i, char **replace);
+char   **wild_card(char *str);
+int	ft_dir_count(char *str);
+int	search_match(char *str, char *file, char **tab);
 #endif

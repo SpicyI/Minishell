@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 17:04:28 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 19:46:58 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:22:46 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int	close_pipeline(t_built *utils, pid_t *id, int *herdocs)
 	unsetfds(utils);
 	close(utils->b_pipe[1]);
 	close(utils->b_pipe[0]);
+	close(utils->input_fd);
 	return (ft_exitstatus(utils->status));
 }

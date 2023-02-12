@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:53:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/11 23:57:57 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 16:50:11 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,15 @@ void	ft_read_loop(int nl)
 	char	*line;
 
 	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 	while (1)
 	{
 		if (nl)
 			line = ft_strjoin(line, ft_trim(ft_color(0), " "));
 		else
 			line = ft_trim(ft_color(1), " ");
+		if (!line)
+			continue;
 		add_history(line);
 		ft_pipe_syntax(line, 0, 0, 0);
 		if (line[ft_strlen(line) - 1] == '|' && !g_gfl.pipeline_error)

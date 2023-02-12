@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 18:39:51 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/10 21:51:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 16:18:31 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_pipe_syntax(char *line, int i, int in_d, int in_s)
 	int	nbr;
 
 	nbr = 1;
-	while (line[i])
+	while (line && line[i])
 	{
 		if (line[i] == '"' && !in_s)
 			in_d = !in_d;

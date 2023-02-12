@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 22:50:11 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 16:36:46 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
-#include <signal.h>
 /****************************************************************/
 /*          defines         */
 # define ECHO_NL "-n"
@@ -43,6 +43,7 @@
 # define PERMISSION_DENIED "minishell: %s: Permission denied\n"
 # define COMMAND_NOT_FOUND "minishell: %s: command not found\n"
 # define NOT_A_DIRECTORY "minishell: %s: Not a directory\n"
+# define HOME_NOT_SET "minishell: cd: HOME not set\n"
 
 /******************************************************/
 /*          echo            */
@@ -72,12 +73,12 @@ t_export	*ft_exportnew(char *content);
 t_env		*ft_envnew(char **content);
 void		ft_envadd_back(t_env **alst, t_env *new);
 void		ft_exportadd_back(t_export **alst, t_export *new);
-void	ft_not_envadd_back(t_not_env **alst, t_not_env *new);
+void		ft_not_envadd_back(t_not_env **alst, t_not_env *new);
 t_not_env	*ft_not_envnew(char **content);
 void		free_not_env_node(t_not_env *node);
 void		free_env_node(t_env *node);
 void		free_export_node(t_export *node);
-void sender(t_cmd *cmd);
+void		sender(t_cmd *cmd);
 
 /*			unset			*/
 int			unset_env(char *name);
@@ -90,12 +91,12 @@ int			env(void);
 
 /*			exit			*/
 int			shell_exit(char **args);
-int has_shell_var(char **str);
-void shell_env_set(t_cmd *cmd, int cmd_n);
+int			has_shell_var(char **str);
+void		shell_env_set(t_cmd *cmd, int cmd_n);
 /***************************************************/
 //this part is for the execution of the commands
 /*              cmd analyzing       */
-void ft_clean_cmd(t_cmd *cmd, int n);
+void		ft_clean_cmd(t_cmd *cmd, int n);
 /*  innit ref to builtins functs */
 t_match		*init(void);
 int			ft_envlen(t_env *env);
@@ -145,5 +146,6 @@ void		set_middle(t_built *utils, t_cmd *cmd);
 void		default_set(t_built *utils, t_cmd *cmd);
 void		pipe_set(t_built *utils, t_cmd *cmd);
 /*                  signals             */
-void	sigint_handler(int sig);
+void		sigint_handler(int sig);
+void        sigquit_handler(int sig);
 #endif

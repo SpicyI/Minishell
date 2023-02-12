@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:22:16 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 17:49:57 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:24:51 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ void	ft_isdir(char *cmd, int opt)
 		if (ft_strchr(cmd, '/') && opt == 0)
 		{
 			ft_dprintf(NOT_A_DIRECTORY, cmd);
+			closedir(dir);
 			exit(126);
 		}
 		else if (opt)
 		{
 			ft_dprintf(COMMAND_NOT_FOUND, cmd);
+			closedir(dir);
 			exit(127);
 		}
 		closedir(dir);

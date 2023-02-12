@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:03:32 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 16:54:33 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 18:58:05 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	sigint_handler(int sig)
 	int	i;
 
 	i = -1;
+	dprintf(2,"hey\n");
 	if (g_gfl.pid == 0)
 	{
 		printf("\n");
@@ -43,4 +44,10 @@ void	sigquit_handler(int sig)
 		while (++i < g_gfl.crp)
 			kill(g_gfl.pid[i], sig);
 	}
+}
+
+void	sigstp_handler(int sig)
+{
+	dprintf(2,"sig is %d\n", sig);
+	return ;
 }

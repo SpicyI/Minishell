@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 17:50:49 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 19:22:22 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void		free_env_node(t_env *node);
 void		free_export_node(t_export *node);
 void		sender(t_cmd *cmd);
 int         is_shell_var(char **tab);
+int is_shell_var2(char *str);
+char    *get_shell_var_value(char *str);
 
 /*			unset			*/
 int			unset_env(char *name);
@@ -152,4 +154,5 @@ void		pipe_set(t_built *utils, t_cmd *cmd);
 /*                  signals             */
 void		sigint_handler(int sig);
 void        sigquit_handler(int sig);
+void	sigstp_handler(int sig);
 #endif

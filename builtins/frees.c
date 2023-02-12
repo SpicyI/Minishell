@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:14:12 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/09 18:03:19 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/12 19:26:20 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ int	ft_env(char *str)
 		}
 		tmp2 = tmp2->next;
 	}
-	return (0);
+	return (is_shell_var2(str));
 }

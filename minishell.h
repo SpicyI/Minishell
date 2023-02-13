@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 18:45:18 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:17:31 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,4 +168,5 @@ t_list		*ft_arr_list(char **arr);
 char		**ft_list_arr(t_list *list);
 void		ft_iterforwild(t_list **list);
 void		fill_replacer(char *str, char *file, char **replace, int *i);
+int			first_match(char **tab, size_t i, char *tmp);
 #endif

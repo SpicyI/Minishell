@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 21:09:29 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 18:25:53 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:16:30 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 int	search_match(char *str, char *file, char **tab)
 {
 	size_t	i;
-	char	*tmp;
 
 	i = 0;
-	tmp = file;
 	if (!tab || !*tab)
 		return (0);
 	if (*str == '*')
 	{
-		tmp = ft_strnstr(tmp, tab[i], ft_strlen(tmp));
-		if (tmp == NULL)
+		if (!first_match(tab, i, file))
 			return (0);
-		tmp = tmp + ft_strlen(tab[i++]);
+		file = file + ft_strlen(tab[i++]);
 	}
-	else if (ft_strncmp(tmp, tab[i], ft_strlen(tab[i])) != 0)
+	else if (ft_strncmp(file, tab[i], ft_strlen(tab[i])) != 0)
 		return (0);
 	while (i < ft_arrlen(tab))
 	{
-		tmp = ft_strnstr(tmp, tab[i], ft_strlen(tmp));
-		if (tmp == NULL)
+		if (i == ft_arrlen(tab) - 1 && ft_strncmp(file + (ft_strlen(file)
+					- ft_strlen(tab[i])), tab[i], 0) != 0)
 			return (0);
-		tmp = tmp + ft_strlen(tab[i++]);
+		file = ft_strnstr(file, tab[i], ft_strlen(file));
+		if (file == NULL)
+			return (0);
+		file = file + ft_strlen(tab[i++]);
 	}
 	return (1);
 }

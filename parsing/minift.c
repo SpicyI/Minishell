@@ -1,45 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   minift.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 14:41:10 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 23:33:40 by del-khay         ###   ########.fr       */
+/*   Created: 2023/02/11 19:26:02 by azakariy          #+#    #+#             */
+/*   Updated: 2023/02/13 13:13:28 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_get_line(int nl, char *line)
 {
-	char	*ptr;
-	size_t	i;
+	char	*line2;
 
-	i = 0;
-	ptr = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (ptr == 0)
-		return (0);
-	while (s[i])
+	line2 = NULL;
+	while (!line2 || (line2 && ft_strlen(line2) == 0))
 	{
-		ptr[i] = s[i];
-		i++;
+		if (nl)
+			line2 = ft_clean_join(line, ft_trim(ft_color(0), " "));
+		else
+			line2 = ft_trim(ft_color(1), " ");
+		if (line2)
+			free(line2);
+		else
+			printf("\n");
 	}
-	ptr[i] = 0;
-	return (ptr);
-}
-
-void	ft_dfree(char **string)
-{
-	int	i;
-
-	i = 0;
-	if (string[i])
-		free(string[i]);
-	i++;
-	if (string[i])
-		free(string[i]);
-	if (string)
-		free(string);
+	return (line2);
 }

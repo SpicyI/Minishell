@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 18:02:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/10 21:51:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:13:28 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,61 +30,59 @@ char	**ft_append(char **array, char *new_str)
 		i = 0;
 		while (array[i])
 		{
-			new_array[i] = array[i];
+			new_array[i] = ft_strdup(array[i]);
 			i++;
 		}
+		ft_free_double(array);
 	}
 	new_array[i] = new_str;
-	free(array);
 	return (new_array);
 }
 
-int	ft_key_chars(char *str, char ***array)
+int	ft_key_chars(char *str)
 {
 	int	i;
 
-	i = 0;
+	i = 0 ;
 	if (str[i] == '>')
 	{
 		while (str[i] == '>')
-			i++;
-		*array = ft_append(*array, ft_substr(str, 0, i));
+			i += 1;
+		return (i);
 	}
-	else if (str[i] == '<')
+	else
 	{
 		while (str[i] == '<')
-			i++;
-		*array = ft_append(*array, ft_substr(str, 0, i));
+			i += 1;
+		return (i);
 	}
-	return (i);
 }
 
-char	**ft_filter(char *part, int i, int j)
+char	**ft_filter(char *part, int i)
 {
-	int		in_d;
-	int		in_s;
 	char	**part_array;
+	char	*holder;
+	int		x;
 
-	in_d = 0;
-	in_s = 0;
 	part_array = NULL;
+	holder = NULL;
 	while (part[i])
 	{
-		if (part[i] == '"' && !in_s)
-			in_d = !in_d;
-		else if (part[i] == '\'' && !in_d)
-			in_s = !in_s;
-		if (!in_s && !in_d && (part[i] == '>' || part[i] == '<'))
+		i = ft_skip_quotes(part, i);
+		if (part[i] == '>' || part[i] == '<')
 		{
-			part_array = ft_append(part_array, ft_substr(part, j, i - j));
-			i += ft_key_chars(part + i, &part_array);
-			j = i;
+			part_array = ft_append(part_array, holder);
+			x = ft_key_chars(part + i);
+			part_array = ft_append(part_array, ft_substr(part, i, x));
+			i += x;
 		}
 		else
+		{
+			holder = ft_append_char(holder, part[i]);
 			i++;
+		}
 	}
-	part_array = ft_append(part_array, ft_substr(part, j, i - j));
-	return (part_array);
+	return (ft_append(part_array, holder));
 }
 
 void	ft_printf_double(char **array)
@@ -108,13 +106,13 @@ void	ft_prod_line(char **cmd, t_cmd *s_cmd, int is_last)
 	array = NULL;
 	while (cmd[i])
 	{
-		array = ft_destructor(array, ft_filter(cmd[i], 0, 0), 0);
+		array = ft_destructor(array, ft_filter(cmd[i], 0), 0);
 		i++;
 	}
-	ft_free_double(cmd);
-	ft_find_env(array);
 	ft_set_helpers(array, s_cmd);
 	ft_fill_struct(array, s_cmd, 0, is_last);
+	if (s_cmd->cmd)
+		ft_find_env(s_cmd->cmd);
 	i = 0;
 	while (s_cmd->cmd && s_cmd->cmd[i])
 	{

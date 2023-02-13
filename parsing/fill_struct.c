@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:15:21 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/10 21:51:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:13:28 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,23 @@ void	ft_fill_struct(char **array, t_cmd *cmd, int i, int is_last)
 		if (ft_valid_syntax(array, i, is_last))
 			break ;
 		if (ft_strcmp(array[i], ">>"))
-			cmd->append = ft_append(cmd->append, array[++i]);
+			cmd->append = ft_append(cmd->append, ft_strdup(array[++i]));
 		else if (ft_strcmp(array[i], "<<"))
-			cmd->delimiter = ft_append(cmd->delimiter, array[++i]);
+			cmd->delimiter = ft_append(cmd->delimiter, ft_strdup(array[++i]));
 		else if (ft_strcmp(array[i], ">"))
-			cmd->output = ft_append(cmd->output, array[++i]);
+			cmd->output = ft_append(cmd->output, ft_strdup(array[++i]));
 		else if (ft_strcmp(array[i], "<"))
-			cmd->input = ft_append(cmd->input, array[++i]);
+			cmd->input = ft_append(cmd->input, ft_strdup(array[++i]));
 		else
 		{
 			if (!cmd->is_built_in)
 				cmd->is_built_in = ft_is_built_in(array[i]);
-			cmd->cmd = ft_append(cmd->cmd, array[i]);
+			cmd->cmd = ft_append(cmd->cmd, ft_strdup(array[i]));
 		}
 		if (array[i])
 			i++;
 	}
-	ft_free_stuff(array, i);
+	ft_free_double(array);
 }
 
 void	ft_set_helpers(char **array, t_cmd *cmd)

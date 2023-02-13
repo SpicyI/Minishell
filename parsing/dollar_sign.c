@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 00:09:50 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/10 21:51:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:13:28 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ char	*ft_find_not_env(char *name)
 		}
 		not_env = not_env->next;
 	}
+	free(name);
 	return (NULL);
 }
 

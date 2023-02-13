@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 22:56:29 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:04:14 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,10 @@ void	sigstp_handler(int sig);
 
 /*              bonus*/
 void	ft_replace(t_cmd *cmds, int size);
-void   ft_change_line(t_cmd *cmds, int i, char **replace);
 char   **wild_card(char *str);
 int	ft_dir_count(char *str);
 int	search_match(char *str, char *file, char **tab);
+t_list *ft_arr_list(char **arr);
+char **ft_list_arr(t_list *list);
+void	ft_iterforwild(t_list **list);
 #endif

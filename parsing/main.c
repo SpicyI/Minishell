@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:53:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/12 21:05:56 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:32:13 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,35 +24,31 @@ void	ft_init_global(char **envp)
 	g_gfl.crp = 0;
 }
 
-void	ft_reset(char *line, t_cmds *cmds)
+void	ft_reset(char *line, t_cmds *cmds, int nl)
 {
 	g_gfl.syntax_error = 0;
 	g_gfl.p_error_index = -1;
 	g_gfl.pipeline_error = NULL;
-	free(line);
-	line = NULL;
-	ft_free_struct(cmds);
+	if (line && nl == 0)
+		free(line);
+	if (cmds)
+	{
+		ft_free_struct(cmds);
+		if (cmds->line)
+			free(cmds->line);
+		free(cmds);
+	}
 }
 
-void	ft_read_loop(int nl)
+void	ft_read_loop(int nl, char *line, t_cmds *cmds)
 {
-	t_cmds	*cmds;
-	char	*line;
-
-	// signal(SIGINT, sigint_handler);
-	dprintf(2, "sddkjchkusdh\n");
-	signal(SIGQUIT, sigquit_handler);
-	// signal(SIGABRT, sigstp_handler);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		if (nl)
-			line = ft_strjoin(line, ft_trim(ft_color(0), " "));
-		else
-			line = ft_trim(ft_color(1), " ");
-		if (!line)
-			continue;
-		add_history(line);
-		ft_pipe_syntax(line, 0, 0, 0);
+		line = ft_get_line(nl, line);
+		add_history(ft_strdup(line));
+		ft_pipe_syntax(line, 0);
 		if (line[ft_strlen(line) - 1] == '|' && !g_gfl.pipeline_error)
 			nl = 1;
 		else if (line[0] == '|' && nl == 0)
@@ -62,9 +58,10 @@ void	ft_read_loop(int nl)
 			cmds = ft_parsing(line, 0);
 			if (!g_gfl.syntax_error && g_gfl.p_error_index == -1)
 				executor(cmds);
-			ft_reset(line, cmds);
 			nl = 0;
 		}
+		ft_reset(line, cmds, nl);
+		cmds = NULL;
 	}
 	free(line);
 }
@@ -73,6 +70,7 @@ t_cmds	*ft_parsing(char *line, int i)
 {
 	t_cmds	*cmds;
 	char	***parts;
+	int		j;
 
 	cmds = ft_calloc(sizeof(t_cmds), 1);
 	parts = ft_double_spit(line, cmds);
@@ -82,21 +80,27 @@ t_cmds	*ft_parsing(char *line, int i)
 		ft_prod_line(parts[i], cmds->line + i, !parts[i + 1]);
 		i++;
 	}
-	while (i < cmds->size)
+	j = 0;
+	while (parts[j])
 	{
-		ft_free_double(parts[i]);
-		i++;
+		ft_free_double(parts[j]);
+		j++;
 	}
-	free(parts);
 	ft_doc_doc(cmds->line, i);
+	free(parts);
 	return (cmds);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_cmds	*cmds;
+	char	*line;
+
+	cmds = NULL;
+	line = NULL;
 	(void)argc;
 	(void)argv;
 	ft_init_global(envp);
-	ft_read_loop(0);
+	ft_read_loop(0, line, cmds);
 	return (0);
 }

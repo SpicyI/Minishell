@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:49:57 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/10 21:51:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:13:28 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_butcher(char *line, char **cmds, char c)
 
 	i = 0;
 	j = 0;
-	while (line[i])
+	while (line && line[i])
 	{
 		x = i;
 		i = ft_skip(line, i, c);
@@ -29,33 +29,28 @@ void	ft_butcher(char *line, char **cmds, char c)
 		while (line[i] == c)
 			i++;
 	}
+	if (line)
+		free(line);
 }
 
 int	ft_count_cmds(char *line, char c, int i)
 {
-	int	in_d;
-	int	in_s;
 	int	cmds;
 
 	cmds = 1;
-	in_d = 0;
-	in_s = 0;
 	while (line[i])
 	{
-		if (line[i] == '"' && !in_s)
-			in_d = !in_d;
-		if (line[i] == '\'' && !in_d)
-			in_s = !in_s;
-		if (line[i] == c && !in_d && !in_s)
+		i = ft_skip_quotes(line, i);
+		if (line[i] == c)
 		{
-			while (line[i] == c && !in_d && !in_s)
+			while (line[i] == c)
 				i++;
 			cmds++;
 		}
 		if (line[i])
 			i++;
 	}
-	return (cmds);
+	return (cmds + 1);
 }
 
 char	**ft_super_split(char *line, char c)
@@ -66,9 +61,8 @@ char	**ft_super_split(char *line, char c)
 
 	i = 0;
 	nbr_of_cmds = ft_count_cmds(line, c, 0);
-	cmds = ft_calloc(nbr_of_cmds + 1, sizeof(char *));
+	cmds = ft_calloc(nbr_of_cmds, sizeof(char *));
 	ft_butcher(line, cmds, c);
-	free(line);
 	return (cmds);
 }
 
@@ -86,7 +80,6 @@ void	ft_free_double(char **array)
 		i++;
 	}
 	free(array);
-	array = NULL;
 }
 
 char	***ft_double_spit(char *line, t_cmds *cmds_list)
@@ -94,7 +87,6 @@ char	***ft_double_spit(char *line, t_cmds *cmds_list)
 	char	**cmds;
 	char	***parts;
 	int		i;
-	char	*buffer;
 
 	cmds = ft_split_by_pipeline(line);
 	i = 0;
@@ -106,8 +98,7 @@ char	***ft_double_spit(char *line, t_cmds *cmds_list)
 	i = 0;
 	while (cmds[i])
 	{
-		buffer = ft_trim(cmds[i], " ");
-		parts[i] = ft_super_split(buffer, ' ');
+		parts[i] = ft_super_split(ft_trim(cmds[i], " "), ' ');
 		i++;
 	}
 	free(cmds);

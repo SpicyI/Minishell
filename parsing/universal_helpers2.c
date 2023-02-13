@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:02:04 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/10 21:51:32 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:37:17 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,29 @@ char	*ft_clean_join(char *str, char *str2)
 
 char	*ft_color(int i)
 {
+	printf("\033[0;32m");
 	if (i)
-		return (readline("\033[0;35mMinishell$ \033[0m"));
+		return (readline("\033[0;35mMinishell$\033[0m "));
 	else
-		return (readline("\033[0;35m> \033[0m"));
+		return (readline("> "));
+	
 }
 
-void	ft_free_stuff(char **array, int start)
+int	ft_skip_quotes(char *str, int i)
 {
-	int	i;
-
-	i = 0;
-	while (i < start)
+	if (str[i] == '"')
 	{
-		if (array[i][0] == '>' || array[i][0] == '<')
-		{
-			free(array[i]);
-			array[i] = NULL;
-		}
 		i++;
+		while (str[i] && str[i] != '"')
+			i++;
+		return (i);
 	}
-	while (array[start])
+	else if (str[i] == '\'')
 	{
-		free(array[start]);
-		array[start] = NULL;
-		start++;
+		i++;
+		while (str[i] && str[i] != '\'')
+			i++;
+		return (i);
 	}
-	free(array);
+	return (i);
 }

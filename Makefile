@@ -1,10 +1,10 @@
 NAME = minishell
-SRC = $(wildcard parsing/*.c) $(wildcard builtins/*.c) $(wildcard execute/*.c)
+SRC = $(wildcard parsing/*.c) $(wildcard builtins/*.c) $(wildcard execute/*.c) 
 
 ALL : $(NAME)
 
 $(NAME) : $(SRC)
-	gcc -g -Wall -Wextra -Werror -I . libft/libft.a -lreadline $(SRC) -o $(NAME) -fsanitize=address
+	gcc -Wall -Wextra -Werror -I . libft/libft.a -lreadline $(SRC) -o $(NAME) -g -fsanitize=address
 fclean :
 	rm $(NAME)
 

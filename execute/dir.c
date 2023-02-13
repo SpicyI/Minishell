@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 21:09:29 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 23:17:52 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:05:02 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	ft_dir_count(char *str)
 {
 	struct dirent   *de;
 	DIR             *dir;
+	char			**tab;
 	int i = 0;
 
 	dir = opendir(".");
@@ -61,10 +62,10 @@ int	ft_dir_count(char *str)
 			continue ;
 		if(ft_strncmp(str, "*" , 0) == 0)
 			i++;
-		if (search_match(str, de->d_name, ft_split(str, '*')) > 0)
+		tab = ft_split(str, '*');
+		if (search_match(str, de->d_name, tab) > 0)
 			i++;
-			
-		
+		ft_free2(tab);
 	}
 	closedir(dir);
 	return (i);
@@ -75,6 +76,7 @@ char   **wild_card(char *str)
     struct dirent   *de;
 	DIR             *dir;
     char           **replace;
+	char			**tab;
     int i[2];
 
     i[0] = ft_dir_count(str);
@@ -89,69 +91,72 @@ char   **wild_card(char *str)
         {
 			if (ft_strncmp(de->d_name, ".", 1) == 0)
 				continue ;
+			tab = ft_split(str, '*');
 			if(ft_strncmp(str, "*" , 0) == 0)
 				replace[i[1]++] = ft_strdup(de->d_name);
-			else if (search_match(str, de->d_name, ft_split(str, '*')) > 0)
+			else if (search_match(str, de->d_name, tab) > 0)
                 replace[i[1]++] = ft_strdup(de->d_name);
+			ft_free2(tab);
         }
     }
     return (replace);
 }
 
-void   ft_change_line(t_cmd *cmds, int i, char **replace)
-{
-	char **tmp;
-	int j;
-	
-	j = 0;
-	tmp = ft_calloc(ft_arrlen(cmds->cmd) + ft_arrlen(replace), sizeof(char *));
-	while (j < i)
-	{
-		tmp[j] = ft_strdup(cmds->cmd[j]);
-		j++;
-	}
-	i = 0;
-	while (replace[i])
-	{
-		tmp[j] = ft_strdup(replace[i]);
-		j++;
-		i++;
-	}
-	j = 0;
-	while (cmds->cmd[j])
-	{
-		free(cmds->cmd[j]);
-		j++;
-	}
-	free(cmds->cmd);
-	cmds->cmd = tmp;
-}
 
 void	ft_replace(t_cmd *cmds, int size)
 {
-	char	**replace;
 	int		j;
-	int		i;
+	t_list	*tmp;
 
 	j = 0;
 	while (j < size)
 	{
-		i = 0;
-		while((cmds + j)->cmd[i])
-		{
-			if(ft_strchr((cmds + j)->cmd[i], '*'))
-			{
-				replace = wild_card((cmds + j)->cmd[i]);
-				if (!replace)
-				{
-					i++;
-					continue;
-				}
-				ft_change_line((cmds + j), i , replace);
-				free(replace);
-			}
-			i++;
-		}
+		tmp = ft_arr_list((cmds + j)->cmd);
+		ft_iterforwild(&tmp);
+		free((cmds +j)->cmd);
+		(cmds + j)->cmd = ft_list_arr(tmp);
+		ft_lstclear(&tmp, free);
 		j++;
+	}
+}
+
+void	ft_iterforwild(t_list **list)
+{
+	t_list	*tmp;
+	char **replace;
+	t_list *prev;
+
+	tmp = *list;
+	prev = NULL;
+	while (tmp)
+	{
+
+		if(ft_strchr(tmp->content, '*'))
+		{
+			replace = wild_card(tmp->content);
+			if (!replace)
+			{
+				tmp = tmp->next;
+				continue;
+			}
+			if (!prev)
+			{
+				*list = ft_arr_list(replace);
+				ft_lstadd_back(list,tmp->next);
+				ft_lstdelone(tmp, free);
+				tmp = *list;
+			}
+			if (prev)
+			{
+				prev->next = ft_arr_list(replace);
+				ft_lstadd_back(&prev->next, tmp->next);
+				ft_lstdelone(tmp, free);
+				tmp = prev->next;
+			}
+			free(replace);
+			continue;
+		}
+		prev = tmp;
+		tmp = tmp->next;
 	}
 }

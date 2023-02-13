@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:28:32 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/10 21:51:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:13:28 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ char	**ft_destructor(char **array, char **array2, int j)
 	i = 0;
 	while (array && array[i])
 	{
-		new_array[i] = array[i];
+		new_array[i] = ft_strdup(array[i]);
 		i++;
 	}
 	j = 0;
 	while (array2 && array2[j])
 	{
-		new_array[i + j] = array2[j];
+		new_array[i + j] = ft_strdup(array2[j]);
 		j++;
 	}
-	free(array);
-	free(array2);
+	ft_free_double(array);
+	ft_free_double(array2);
 	return (new_array);
 }
 
@@ -51,8 +51,7 @@ char	*ft_append_char(char *str, char c)
 		j = ft_strlen(str);
 	else
 		j = 0;
-	new_str = malloc(sizeof(char) * (j + 2));
-	new_str[j + 1] = '\0';
+	new_str = ft_calloc(j + 2, sizeof(char));
 	while (str && str[i])
 	{
 		new_str[i] = str[i];
@@ -120,13 +119,16 @@ void	ft_free_struct(t_cmds *cmds)
 		return ;
 	while (i < cmds->size)
 	{
-		ft_free_double((cmds->line + i)->append);
-		ft_free_double((cmds->line + i)->cmd);
-		ft_free_double((cmds->line + i)->output);
-		ft_free_double((cmds->line + i)->input);
-		ft_free_double((cmds->line + i)->delimiter);
+		if ((cmds->line + i)->append)
+			ft_free_double((cmds->line + i)->append);
+		if ((cmds->line + i)->cmd)
+			ft_free_double((cmds->line + i)->cmd);
+		if ((cmds->line + i)->output)
+			ft_free_double((cmds->line + i)->output);
+		if ((cmds->line + i)->input)
+			ft_free_double((cmds->line + i)->input);
+		if ((cmds->line + i)->delimiter)
+			ft_free_double((cmds->line + i)->delimiter);
 		i++;
 	}
-	free(cmds);
-	cmds = NULL;
 }

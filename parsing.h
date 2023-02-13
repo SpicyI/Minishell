@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:57:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/13 16:23:48 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:44:47 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 
 typedef struct s_wild
 {
-	struct dirent	*de;
-	DIR				*dir;
-} t_wild;
+	struct dirent		*de;
+	DIR					*dir;
+}						t_wild;
 typedef struct s_builtin
 {
 	int					input_fd;
@@ -144,54 +144,55 @@ t_line					g_gfl;
 
 // t_line	g_gfl;
 
-void	ft_butcher(char *line, char **cmds, char c);
-int		ft_count_cmds(char *line, char c, int i);
-char	**ft_super_split(char *line, char c);
-void	ft_free_double(char **array);
-char	***ft_double_spit(char *line, t_cmds *cmds_list);
-void	ft_printf_double(char **array);
-void	ft_prod_line(char **cmd, t_cmd *s_cmd, int is_last);
-char	**ft_filter(char *part, int i);
-int		ft_key_chars(char *str);
-char	**ft_append(char **array, char *new_str);
-int		ft_valid_syntax(char **cmd, int i, int is_last);
-void	ft_throw_error(char	*str, int code);
-void	ft_right_arrow(char **cmd, int i, int is_last);
-void	ft_left_arrow(char **cmd, int i, int is_last);
-int		ft_strcmp(char *str, char *str2);
-void	ft_fill_struct(char **array, t_cmd *cmd, int i, int is_last);
-void	ft_print_struct(t_cmd *cmd);
-void	ft_init_struct(t_cmd *cmd);
-char	**ft_destructor(char **array, char **array2, int j);
-void	ft_pipeline_error(char *line, int i, int nbr);
-char	*ft_append_char(char *str, char c);
-char	*ft_get_env(char *str, int i);
-char	*ft_replace_env(char *str, int i, int in_d, int in_s);
-void	ft_find_env(char **array);
-t_env	*ft_link(char **envp);
-t_env	*ft_new_env(char *name, char *value);
-void	ft_env_add(t_env **lst, t_env *new);
-void	ft_open_doc(t_cmd *line, int i);
-char	*ft_remove_quotes(char *str);
-int		ft_skip(char *line, int i, char c);
-void	ft_init_global(char **envp);
-void	ft_reset(char *line, t_cmds *cmds, int nl);
-t_cmds	*ft_parsing(char *line, int i);
-void	ft_pipe_syntax(char *line, int i);
-void	ft_doc_doc(t_cmd *line, int i);
-char	**ft_split_by_pipeline(char *line);
-int		ft_pipe_counter(char *line);
-void	ft_set_helpers(char **array, t_cmd *cmd);
-char	*ft_trim(char *line, char *set);
-char	*ft_clean_join(char *str, char *str2);
-void	ft_free_struct(t_cmds *cmds);
-char	*ft_color(int i);
-void	ft_read_loop(int nl, char *line, t_cmds *cmds);
-t_env	*ft_no_env(void);
-char	*ft_find_not_env(char *name);
-char	*ft_hyphen(char *str);
-void	*ft_collect(int size, int nbr);
-char	*ft_get_line(int nb, char *line);
-int		ft_skip_quotes(char *str, int i);
+void					ft_butcher(char *line, char **cmds, char c);
+int						ft_count_cmds(char *line, char c, int i);
+char					**ft_super_split(char *line, char c);
+void					ft_free_double(char **array);
+char					***ft_double_spit(char *line, t_cmds *cmds_list);
+void					ft_printf_double(char **array);
+void					ft_prod_line(char **cmd, t_cmd *s_cmd, int is_last);
+char					**ft_filter(char *part, int i);
+int						ft_key_chars(char *str);
+char					**ft_append(char **array, char *new_str);
+int						ft_valid_syntax(char **cmd, int i, int is_last);
+void					ft_throw_error(char *str, int code);
+void					ft_right_arrow(char **cmd, int i, int is_last);
+void					ft_left_arrow(char **cmd, int i, int is_last);
+int						ft_strcmp(char *str, char *str2);
+void					ft_fill_struct(char **array, t_cmd *cmd, int i,
+							int is_last);
+void					ft_print_struct(t_cmd *cmd);
+void					ft_init_struct(t_cmd *cmd);
+char					**ft_destructor(char **array, char **array2, int j);
+void					ft_pipeline_error(char *line, int i, int nbr);
+char					*ft_append_char(char *str, char c);
+char					*ft_get_env(char *str, int i);
+char					*ft_replace_env(char *str, int i, int in_d, int in_s);
+void					ft_find_env(char **array);
+t_env					*ft_link(char **envp);
+t_env					*ft_new_env(char *name, char *value);
+void					ft_env_add(t_env **lst, t_env *new);
+void					ft_open_doc(t_cmd *line, int i);
+char					*ft_remove_quotes(char *str);
+int						ft_skip(char *line, int i, char c);
+void					ft_init_global(char **envp);
+void					ft_reset(char *line, t_cmds *cmds, int nl);
+t_cmds					*ft_parsing(char *line, int i);
+void					ft_pipe_syntax(char *line, int i);
+void					ft_doc_doc(t_cmd *line, int i);
+char					**ft_split_by_pipeline(char *line);
+int						ft_pipe_counter(char *line);
+void					ft_set_helpers(char **array, t_cmd *cmd);
+char					*ft_trim(char *line, char *set);
+char					*ft_clean_join(char *str, char *str2);
+void					ft_free_struct(t_cmds *cmds);
+char					*ft_color(int i);
+void					ft_read_loop(int nl, char *line, t_cmds *cmds);
+t_env					*ft_no_env(void);
+char					*ft_find_not_env(char *name);
+char					*ft_hyphen(char *str);
+void					*ft_collect(int size, int nbr);
+char					*ft_get_line(int nb, char *line);
+int						ft_skip_quotes(char *str, int i);
 
 #endif

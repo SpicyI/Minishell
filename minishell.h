@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 16:06:52 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:45:18 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define NOT_A_DIRECTORY "minishell: %s: Not a directory\n"
 # define HOME_NOT_SET "minishell: cd: HOME not set\n"
 # define OLDPWD_NOT_SET "minishell: cd: OLDPWD not set\n"
-#define CAN_NOT_OPEN_DIR "minishell: Could not open current directory\n"
+# define CAN_NOT_OPEN_DIR "minishell: Could not open current directory\n"
 
 /******************************************************/
 /*          echo            */
@@ -54,10 +54,10 @@ int			is_option(char *str);
 
 /*          cd              */
 int			cd(char **path);
-void	cd_error(char *path);
-void	set_oldpwd(void);
-void	set_pwd(void);
-char *cd_path(char **args);
+void		cd_error(char *path);
+void		set_oldpwd(void);
+void		set_pwd(void);
+char		*cd_path(char **args);
 
 /*         pwd              */
 int			pwd(void);
@@ -84,9 +84,9 @@ void		free_not_env_node(t_not_env *node);
 void		free_env_node(t_env *node);
 void		free_export_node(t_export *node);
 void		sender(t_cmd *cmd);
-int         is_shell_var(char **tab);
-int is_shell_var2(char *str);
-char    *get_shell_var_value(char *str);
+int			is_shell_var(char **tab);
+int			is_shell_var2(char *str);
+char		*get_shell_var_value(char *str);
 
 /*			unset			*/
 int			unset_env(char *name);
@@ -125,6 +125,7 @@ int			*init_herdocs(t_cmd *cmds, int num_of_cmds);
 void		close_fds(int *fds, int i, int opt);
 int			closer(t_cmd *cmd, int *input_fds, int *output_fds);
 int			close_pipeline(t_built *utils, pid_t *id, int *herdocs);
+int			pipeline_regulator(t_built *utils, int i, int *herdocs);
 
 /*				opener.c */
 int			open_herdoc(t_cmd *cmd);
@@ -155,15 +156,16 @@ void		default_set(t_built *utils, t_cmd *cmd);
 void		pipe_set(t_built *utils, t_cmd *cmd);
 /*                  signals             */
 void		sigint_handler(int sig);
-void        sigquit_handler(int sig);
-void	sigstp_handler(int sig);
+void		sigquit_handler(int sig);
+void		sigstp_handler(int sig);
 
 /*              bonus*/
-void	ft_replace(t_cmd *cmds, int size);
-char   **wild_card(char *str);
-int	ft_dir_count(char *str);
-int	search_match(char *str, char *file, char **tab);
-t_list *ft_arr_list(char **arr);
-char **ft_list_arr(t_list *list);
-void	ft_iterforwild(t_list **list);
+void		ft_replace(t_cmd *cmds, int size);
+char		**wild_card(char *str);
+int			ft_dir_count(char *str);
+int			search_match(char *str, char *file, char **tab);
+t_list		*ft_arr_list(char **arr);
+char		**ft_list_arr(t_list *list);
+void		ft_iterforwild(t_list **list);
+void		fill_replacer(char *str, char *file, char **replace, int *i);
 #endif

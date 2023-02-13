@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:47:13 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 20:46:32 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:37:01 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,7 @@ int	pipeline(t_cmd *cmds, int num_of_cmds)
 			return (ft_dprintf("fork error\n", NULL));
 		if (!id[i])
 			child_process(cmds, &utils, herdocs, i);
-		close(utils.b_pipe[1]);
-		close(herdocs[i]);
-		close(utils.input_fd);
-		utils.input_fd = utils.b_pipe[0];
-		dup2(utils.default_fd[0], 0);
-		dup2(utils.default_fd[1], 1);
+		pipeline_regulator(&utils, i, herdocs);
 	}
 	return (close_pipeline(&utils, id, herdocs));
 }
@@ -90,16 +85,13 @@ void	child_process(t_cmd *cmds, t_built *utils, int *herdocs, int i)
 			close(utils->b_pipe[0]);
 			close(utils->input_fd);
 			dup2(herdocs[i], 0);
-			close(herdocs[i]);
 		}
-		else if((cmds + i)->last_in == INPUT_FD)
+		else if ((cmds + i)->last_in == INPUT_FD)
 		{
 			close(utils->b_pipe[0]);
 			close(utils->input_fd);
-			close(herdocs[i]);
 		}
-		else
-			close(herdocs[i]);
+		close(herdocs[i]);
 	}
 	if ((cmds + i)->is_built_in)
 		exit(builtin(cmds + i, HERDOC_OFF));

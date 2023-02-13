@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:02:06 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 17:53:19 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:41:48 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ft_getenv(char *name)
 	t_env	*ref;
 
 	ref = g_gfl.env;
-	if (!name || !*name )
+	if (!name || !*name)
 		return (NULL);
 	while (ref)
 	{

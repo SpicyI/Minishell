@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 17:04:28 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 15:22:46 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:40:07 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,15 @@ int	close_pipeline(t_built *utils, pid_t *id, int *herdocs)
 	close(utils->b_pipe[0]);
 	close(utils->input_fd);
 	return (ft_exitstatus(utils->status));
+}
+
+int	pipeline_regulator(t_built *utils, int i, int *herdocs)
+{
+	close(utils->b_pipe[1]);
+	close(herdocs[i]);
+	close(utils->input_fd);
+	utils->input_fd = utils->b_pipe[0];
+	dup2(utils->default_fd[0], 0);
+	dup2(utils->default_fd[1], 1);
+	return (0);
 }

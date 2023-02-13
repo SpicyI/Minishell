@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:49:36 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/13 13:13:28 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 00:30:40 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_throw_error(char *str, int code)
 	int	i;
 
 	i = 0;
-	ft_putstr_fd("WEIRDOO: syntax error near unexpected token `", 2);
+	ft_putstr_fd("Minishell: syntax error near unexpected token `", 2);
 	if (code == 1)
 	{
 		g_gfl.syntax_error = 1;

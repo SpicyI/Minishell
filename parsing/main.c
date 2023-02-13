@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:53:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/13 23:11:02 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 00:30:25 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,13 @@ void	ft_read_loop(int nl, char *line, t_cmds *cmds)
 	while (1)
 	{
 		line = ft_get_line(nl, line);
-		add_history(ft_strdup(line));
+		if (line && !ft_strlen(line))
+		{
+			free(line);
+			line = NULL;
+			continue;
+		}
+		add_history(line);
 		ft_pipe_syntax(line, 0);
 		if (line[ft_strlen(line) - 1] == '|' && !g_gfl.pipeline_error)
 			nl = 1;
@@ -62,7 +68,6 @@ void	ft_read_loop(int nl, char *line, t_cmds *cmds)
 		}
 		ft_reset(line, cmds, nl);
 		cmds = NULL;
-		line = NULL;
 	}
 	free(line);
 }

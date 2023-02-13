@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:26:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/13 22:47:41 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 23:52:22 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,11 @@ char	*ft_get_line(int nl, char *line)
 {
 	char	*line2;
 
-	line2 = NULL;
-	while (!line2 || (line2 && ft_strlen(line2) == 0))
-	{
 		if (nl)
 			line2 = ft_clean_join(line, ft_trim(ft_color(0), " "));
 		else
 			line2 = ft_trim(ft_color(1), " ");
-		// if (line2)
-		// 	free(line2);
-		// if ()
-		// 	printf("\n");
-	}
-	return (line2);
+	if (!line2)
+		exit(0);
+	return(line2);
 }

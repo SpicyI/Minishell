@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:57:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/13 13:15:22 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:23:48 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 # define PARSING_H
 # include "libft/libft.h"
+# include <dirent.h>
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -21,6 +22,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_wild
+{
+	struct dirent	*de;
+	DIR				*dir;
+} t_wild;
 typedef struct s_builtin
 {
 	int					input_fd;

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 13:04:14 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:06:52 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 # define NOT_A_DIRECTORY "minishell: %s: Not a directory\n"
 # define HOME_NOT_SET "minishell: cd: HOME not set\n"
 # define OLDPWD_NOT_SET "minishell: cd: OLDPWD not set\n"
+#define CAN_NOT_OPEN_DIR "minishell: Could not open current directory\n"
 
 /******************************************************/
 /*          echo            */
@@ -56,6 +57,7 @@ int			cd(char **path);
 void	cd_error(char *path);
 void	set_oldpwd(void);
 void	set_pwd(void);
+char *cd_path(char **args);
 
 /*         pwd              */
 int			pwd(void);

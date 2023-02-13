@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:01:10 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 17:41:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:32:45 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,31 +109,10 @@ void	sender(t_cmd *cmd)
 	ft_clean_cmd(cmd, i);
 }
 
-t_not_env	*ft_not_envnew(char **content)
-{
-	t_not_env	*new_node;
-
-	new_node = (t_not_env *)malloc(sizeof(t_not_env));
-	if (!new_node)
-		return (0);
-	if (content)
-	{
-		new_node->name = content[0];
-		new_node->value = content[1];
-	}
-	else
-	{
-		new_node->name = 0;
-		new_node->value = 0;
-	}
-	new_node->next = 0;
-	return (new_node);
-}
-
 int	is_shell_var(char **tab)
 {
 	t_not_env	*tmp;
-	char	*trim;
+	char		*trim;
 
 	tmp = g_gfl.not_env;
 	trim = ft_strtrim(tab[0], "+");

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 19:50:32 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 13:21:02 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:13:32 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,29 +51,43 @@ void	cd_error(char *path)
 	else
 		ft_dprintf(HOME_NOT_SET, NULL);
 }
-int	cd(char **path)
+
+char	*cd_path(char **args)
 {
 	char	*gotothis;
 
-	if (!path || !*path)
+	if (!args || !*args)
 		gotothis = ft_getenv("HOME");
-	else if (!ft_strncmp(*path, "-", 0))
+	else if (!ft_strncmp(*args, "-", 0))
 		gotothis = ft_getenv("OLDPWD");
 	else
-		gotothis = *path;
+		gotothis = ft_strdup(*args);
+	return (gotothis);
+}
+
+int	cd(char **args)
+{
+	char	*gotothis;
+
+	gotothis = cd_path(args);
 	if (!gotothis)
 	{
-		cd_error(*path);
+		cd_error(*args);
 		return (1);
 	}
 	set_oldpwd();
 	if (!ft_strlen(gotothis))
+	{
+		free(gotothis);
 		return (0);
+	}
 	if (chdir(gotothis) == -1)
 	{
-		perror(ft_strjoin(ft_strdup("cd: "), gotothis));
+		ft_dprintf(NO_SUCH_FILE, gotothis);
+		free(gotothis);
 		return (1);
 	}
 	set_pwd();
+	free(gotothis);
 	return (0);
 }

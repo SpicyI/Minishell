@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 21:09:29 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 19:16:30 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 21:36:27 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	search_match(char *str, char *file, char **tab)
 	while (i < ft_arrlen(tab))
 	{
 		if (i == ft_arrlen(tab) - 1 && ft_strncmp(file + (ft_strlen(file)
-					- ft_strlen(tab[i])), tab[i], 0) != 0)
+					- ft_strlen(tab[i])), tab[i], 0) != 0 && str[ft_strlen(str)
+				- 1] != '*')
 			return (0);
 		file = ft_strnstr(file, tab[i], ft_strlen(file));
 		if (file == NULL)

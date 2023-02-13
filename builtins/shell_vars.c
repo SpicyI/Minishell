@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:01:10 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 15:32:45 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 23:05:34 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_clean_cmd(t_cmd *cmd, int n)
 		cmd->cmd[n] = NULL;
 	}
 	free(cmd->cmd);
-	if (n == len)
+	if (n == len || len == 1)
 	{
 		cmd->cmd = NULL;
 		free(tmp);

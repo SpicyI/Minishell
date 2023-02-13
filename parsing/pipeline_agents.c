@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 18:39:51 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/13 13:13:28 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 22:48:24 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ void	ft_pipe_syntax(char *line, int i)
 	int	nbr;
 
 	nbr = 1;
-	if (line[0] == '|')
+	if (line && line[0] == '|')
 	{
 		ft_pipeline_error(line, i, nbr);
 		return ;
 	}
-	while (line[i])
+	while (line && line[i])
 	{
 		i = ft_skip_quotes(line, i);
 		if (line[i] == '|')

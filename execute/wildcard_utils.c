@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:46:22 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 19:17:00 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 22:50:07 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_list	*ft_arr_list(char **arr)
 	int		i;
 
 	i = 0;
+	if (!arr || !*arr)
+		return (NULL);
 	list = NULL;
 	while (arr[i])
 	{

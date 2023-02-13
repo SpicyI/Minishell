@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:53:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/13 13:32:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/13 23:11:02 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	ft_read_loop(int nl, char *line, t_cmds *cmds)
 		}
 		ft_reset(line, cmds, nl);
 		cmds = NULL;
+		line = NULL;
 	}
 	free(line);
 }

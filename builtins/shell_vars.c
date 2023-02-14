@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:01:10 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 23:05:34 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 22:04:45 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,15 @@ void	shell_env_set(t_cmd *cmd, int cmd_n)
 	int	j;
 
 	i = 0;
-	if (!cmd->cmd)
+	if (!cmd->cmd || !ft_arrlen(cmd->cmd))
+	{
+		if (cmd->cmd && !ft_arrlen(cmd->cmd))
+			{
+				ft_free2(cmd->cmd);
+				cmd->cmd = NULL;
+			}
 		return ;
+	}
 	if (cmd_n > 1)
 	{
 		while (i < cmd_n)

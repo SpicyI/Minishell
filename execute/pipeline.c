@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:47:13 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/14 17:31:12 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:55:46 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,62 @@ void	init_pipeline(t_built *utils, int num_of_cmds)
 
 int	*init_herdocs(t_cmd *cmds, int num_of_cmds)
 {
-	int	*herdocs;
-	int	i;
+	int		fds[2];
+	pid_t pid;
+	int		*herdocs;
+	int i = -1;
+	int status;
 
-	i = -1;
 	herdocs = (int *)ft_calloc(num_of_cmds, sizeof(int));
-	while (++i < num_of_cmds)
-		herdocs[i] = open_herdoc(cmds + i);
+	while(++i < num_of_cmds)
+	{
+		pipe(fds);
+		pid = fork();
+		if (!pid)
+		{
+			open_pipe_docs(cmds + i, fds);
+			exit(0);
+		}
+		g_gfl.pid = &pid;
+		g_gfl.crp = 1;
+		waitpid(pid, &status, 0);
+		close(fds[1]);
+		g_gfl.crp = 0;
+		g_gfl.pid = 0;
+		dprintf(2," pipe 1 = %d pipe 2 = %d\n", fds[0], fds[1]);
+		if (ft_exitstatus(status))
+		{
+			close(fds[0]);
+			close_fds(herdocs, i - 1 , FREE_FD_ARR);
+			return (NULL);
+		}
+		herdocs[i] = dup(fds[0]);
+		close(fds[0]);
+	}
 	return (herdocs);
 }
+
+int open_pipe_docs(t_cmd *cmd , int *fds)
+{
+	int	i;
+	int	len;
+
+	len = ft_arrlen(cmd->delimiter);
+	if (!len)
+		return (0);
+	i = 0;
+	while (cmd->delimiter[i] && i < len - 1)
+	{
+		pipe_herdoc(cmd->delimiter[i], fds,HERDOC_OFF);
+		i++;
+	}
+	if (cmd->last_in == HERDOC_FD)
+		pipe_herdoc(cmd->delimiter[i], fds,HERDOC_ON);
+	else
+		pipe_herdoc(cmd->delimiter[i], fds,HERDOC_OFF);
+	return (1);
+}
+
 
 int	pipeline(t_cmd *cmds, int num_of_cmds)
 {
@@ -52,10 +99,14 @@ int	pipeline(t_cmd *cmds, int num_of_cmds)
 
 	i = -1;
 	init_pipeline(&utils, num_of_cmds);
+	herdocs = init_herdocs(cmds, num_of_cmds);
+	if (!herdocs)
+	{
+		return (1);
+	}
 	id = (pid_t *)ft_calloc(num_of_cmds + 1, sizeof(pid_t));
 	g_gfl.pid = id;
 	g_gfl.crp = num_of_cmds;
-	herdocs = init_herdocs(cmds, num_of_cmds);
 	while (++i < num_of_cmds)
 	{
 		if (pipe(utils.b_pipe) == -1)

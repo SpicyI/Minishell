@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/14 18:14:36 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:48:01 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,4 +170,7 @@ char		**ft_list_arr(t_list *list);
 void		ft_iterforwild(t_list **list);
 void		fill_replacer(char *str, char *file, char **replace, int *i);
 int			first_match(char **tab, size_t i, char *tmp);
+/*  test   */
+int	pipe_herdoc(char *delmiter,int *fds, int opt);
+int open_pipe_docs(t_cmd *cmd , int *fds);
 #endif

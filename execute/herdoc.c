@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 17:44:44 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/14 18:23:34 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:35:09 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,28 @@ int	builtin_herdoc(t_cmd *cmd)
 	g_gfl.crp = 0;
 	g_gfl.pid = 0;
 	return (ft_exitstatus(utils.status));
+}
+
+int	pipe_herdoc(char *delmiter,int *fds, int opt)
+{
+	char	*line;
+
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+			break ;
+		if (!ft_strncmp(line, delmiter, 0))
+		{
+			free(line);
+			break ;
+		}
+		line = ft_strjoin(line, "\n");
+		if (opt == HERDOC_ON)
+			write(fds[1], line, ft_strlen(line));
+		free(line);
+	}
+	if (opt == HERDOC_OFF)
+		close(fds[0]);
+	return(0);
 }

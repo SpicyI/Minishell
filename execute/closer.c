@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 17:04:28 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 18:40:07 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 21:47:20 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	close_fds(int *fds, int i, int opt)
 {
+	
 	while (i >= 0)
 	{
 		close(fds[i]);

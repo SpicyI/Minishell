@@ -4,7 +4,7 @@ SRC = $(wildcard parsing/*.c) $(wildcard builtins/*.c) $(wildcard execute/*.c)
 ALL : $(NAME)
 
 $(NAME) : $(SRC)
-	cc -Wall -Wextra -Werror -I . libft/libft.a -lreadline $(SRC) -o $(NAME)
+	cc -Wall -Wextra -Werror -I . libft/libft.a -lreadline $(SRC) -o $(NAME) -g -fsanitize=address
 fclean :
 	rm $(NAME)
 

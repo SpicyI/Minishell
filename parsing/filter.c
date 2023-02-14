@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 18:02:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/14 15:52:27 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 23:24:44 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,38 +56,6 @@ int	ft_key_chars(char *str)
 			i++;
 		return (i);
 	}
-}
-
-char	**ft_filter(char *part, int i)
-{
-	char	**part_array;
-	char	*holder;
-	int		x;
-	int		j;
-	
-	part_array = NULL;
-	holder = NULL;
-	while (part[i])
-	{
-		j = ft_skip_quotes(part, i);
-		if (j > i)
-			holder = ft_substr(part, i, j - i);
-		else if (part[i] == '>' || part[i] == '<')
-		{
-			part_array = ft_append(part_array, holder);
-			holder = NULL;
-			x = ft_key_chars(part + i);
-			if (x + i > i)
-				part_array = ft_append(part_array, ft_substr(part, i, x));
-			i += x;
-		}
-		else
-			holder = ft_append_char(holder, part[i]);
-		i = j;
-		if (part[i])
-			i++;
-	}
-	return (ft_append(part_array, holder));
 }
 
 void	ft_printf_double(char **array)

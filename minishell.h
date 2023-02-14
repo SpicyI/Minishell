@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/14 20:48:01 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 23:19:01 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int			ft_dprintf(char *format, char *str);
 /*				herdoc		*/
 int			herdoc(char *delmiter, int opt);
 int			*init_herdocs(t_cmd *cmds, int num_of_cmds);
-int         builtin_herdoc(t_cmd *cmd);
+int			builtin_herdoc(t_cmd *cmd);
 
 /*				closer.c*/
 void		close_fds(int *fds, int i, int opt);
@@ -170,7 +170,10 @@ char		**ft_list_arr(t_list *list);
 void		ft_iterforwild(t_list **list);
 void		fill_replacer(char *str, char *file, char **replace, int *i);
 int			first_match(char **tab, size_t i, char *tmp);
-/*  test   */
-int	pipe_herdoc(char *delmiter,int *fds, int opt);
-int open_pipe_docs(t_cmd *cmd , int *fds);
+/*  utils   */
+int			pipe_herdoc(char *delmiter, int *fds, int opt);
+int			open_pipe_docs(t_cmd *cmd, int *fds);
+void		reseter(t_cmd *cmd);
+int			ft_herdoc_set2(t_built *utils, int *herdocs, pid_t pid, int i);
+int			mark_start(pid_t *id, int num_of_cmds, int *herdocs);
 #endif

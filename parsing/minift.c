@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:26:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/14 16:22:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 23:24:44 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,13 @@ char	**ft_filter2(char *part, int i, int j)
 	{
 		j = i;
 		if (part[i] == '>')
-		{
-			while (part[j] == '>')
-				j++;
-		}
+			j += ft_skip_me(part + j, '>');
 		else if (part[i] == '<')
-		{
-			while (part[j] == '<')
-				j++;
-		}
+			j += ft_skip_me(part + j, '<');
 		else if (part[i] == '"')
-		{
-			j++;
-			while (part[j] && part[j] != '"')
-				j++;
-		}
+			j += ft_skip_me(part + j + 1, '"') + 1;
 		else if (part[i] == '\'')
-		{
-			j++;
-			while (part[j] && part[j] != '\'')
-				j++;
-		}
+			j += ft_skip_me(part + j + 1, '\'') + 1;
 		else
 			j = ft_normals(part, i);
 		array = ft_append(array, ft_substr(part, i, j - i));
@@ -78,5 +64,15 @@ int	ft_normals(char *str, int i)
 			break ;
 		i++;
 	}
+	return (i);
+}
+
+int	ft_skip_me(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] == c)
+		i++;
 	return (i);
 }

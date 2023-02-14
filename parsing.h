@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:57:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/14 18:27:59 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 23:27:03 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ char					*ft_hyphen(char *str);
 void					*ft_collect(int size, int nbr);
 char					*ft_get_line(int nb, char *line);
 int						ft_skip_quotes(char *str, int i);
-char	**ft_filter2(char *part, int i, int j);
-int		ft_normals(char *str, int i);
-
+char					**ft_filter2(char *part, int i, int j);
+int						ft_normals(char *str, int i);
+int						ft_skip_me(char *str, char c);
 #endif

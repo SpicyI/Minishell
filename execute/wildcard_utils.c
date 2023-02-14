@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:46:22 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 22:50:07 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 23:08:59 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	fill_replacer(char *str, char *file, char **replace, int *i)
 int	first_match(char **tab, size_t i, char *tmp)
 {
 	if (i == ft_arrlen(tab) - 1 && ft_strncmp(tmp + (ft_strlen(tmp)
-				- ft_strlen(tab[i])), tab[i], 0) != 0)
+				- ft_strlen(tab[i])), tab[i], 0) != 0 && tmp[ft_strlen(tmp)
+			- 1] != '*')
 		return (0);
 	tmp = ft_strnstr(tmp, tab[i], ft_strlen(tmp));
 	if (tmp == NULL)

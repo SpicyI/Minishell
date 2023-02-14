@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 19:57:54 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 23:09:27 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:20:33 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_match	*init(void)
 
 int	builtin(t_cmd *cmd, int opt)
 {
-	t_match	*ref;
 	t_built	utils;
 	int		i;
 
@@ -44,22 +43,23 @@ int	builtin(t_cmd *cmd, int opt)
 	utils.status = 0;
 	utils.input_fd = 0;
 	utils.output_fd = 0;
-	ref = init();
+	utils.ref = init();
 	if (cmd->delimiter && opt)
-		utils.herdoc_fd = open_herdoc(cmd);
+		if (builtin_herdoc(cmd))
+			return (1);
 	if (!opener(cmd, &utils))
 		return (1);
 	setfds(&utils, cmd, opt);
-	while (ref[++i].name)
+	while (utils.ref[++i].name)
 	{
-		if (!ft_strncmp(cmd->cmd[0], ref[i].name, 0))
+		if (!ft_strncmp(cmd->cmd[0], utils.ref[i].name, 0))
 		{
-			utils.status = ref[i].sh_built(cmd->cmd + 1);
+			utils.status = utils.ref[i].sh_built(cmd->cmd + 1);
 			break ;
 		}
 	}
 	unsetfds(&utils);
-	free(ref);
+	free(utils.ref);
 	return (utils.status);
 }
 

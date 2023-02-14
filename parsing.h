@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:57:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/13 18:44:47 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:20:02 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ typedef struct s_wild
 	struct dirent		*de;
 	DIR					*dir;
 }						t_wild;
+
+typedef struct s_match
+{
+	int					(*sh_built)(char **);
+	char				*name;
+}						t_match;
+
 typedef struct s_builtin
 {
 	int					input_fd;
@@ -36,13 +43,8 @@ typedef struct s_builtin
 	int					cmd_num;
 	int					default_fd[2];
 	int					b_pipe[2];
+	t_match				*ref;
 }						t_built;
-
-typedef struct s_match
-{
-	int					(*sh_built)(char **);
-	char				*name;
-}						t_match;
 
 // environnement variables
 typedef struct s_env
@@ -194,5 +196,7 @@ char					*ft_hyphen(char *str);
 void					*ft_collect(int size, int nbr);
 char					*ft_get_line(int nb, char *line);
 int						ft_skip_quotes(char *str, int i);
+char	**ft_filter2(char *part, int i, int j);
+int		ft_normals(char *str, int i);
 
 #endif

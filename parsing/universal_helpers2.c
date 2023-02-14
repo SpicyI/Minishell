@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:02:04 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/13 23:41:14 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:04:25 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,16 @@ char	*ft_clean_join(char *str, char *str2)
 
 char	*ft_color(int i)
 {
+	char *line;
+
 	printf("\033[0;32m");
 	if (i)
-		return (readline("\033[0;35mMinishell$\033[0m "));
+		line = readline("Minishell$ \033[0m");
 	else
-		return (readline("> "));
+		line = readline("> \033[0m");
+	if (!line && !i)
+		exit(0);
+	return (line);
 }
 
 int	ft_skip_quotes(char *str, int i)

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 17:44:44 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/09 18:36:31 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:23:34 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	herdoc(char *delmiter, int opt)
 	while (1)
 	{
 		line = readline("> ");
+		if (!line)
+			break ;
 		if (!ft_strncmp(line, delmiter, 0))
 		{
 			free(line);
@@ -34,4 +36,23 @@ int	herdoc(char *delmiter, int opt)
 	if (opt == HERDOC_OFF)
 		return (close(fds[0]));
 	return (fds[0]);
+}
+
+int	builtin_herdoc(t_cmd *cmd)
+{
+	int		id;
+	t_built	utils;
+
+	id = fork();
+	if (!id)
+	{
+		utils.herdoc_fd = open_herdoc(cmd);
+		exit(0);
+	}
+	g_gfl.pid = &id;
+	g_gfl.crp = 1;
+	waitpid(id, &(utils.status), 0);
+	g_gfl.crp = 0;
+	g_gfl.pid = 0;
+	return (ft_exitstatus(utils.status));
 }

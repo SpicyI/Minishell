@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:02:06 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 23:07:21 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:56:19 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	single_cmd(t_cmd *cmd)
 	waitpid(id[0], &status, 0);
 	free(id);
 	g_gfl.pid = NULL;
+	g_gfl.crp = 0;
 	return (ft_exitstatus(status));
 }
 

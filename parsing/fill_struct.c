@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:15:21 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/13 13:13:28 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:52:27 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ int	ft_strcmp(char *str, char *str2)
 	int	i;
 
 	i = 0;
+	if ((!str && str2) || (str && !str2))
+		return (0);
+	else if (!str && !str2)
+		return (1);
 	while (str && str2 && str[i] && str2[i])
 	{
 		if (str[i] != str2[i])

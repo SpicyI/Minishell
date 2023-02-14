@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 18:02:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/13 13:13:28 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:52:27 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**ft_append(char **array, char *new_str)
 	char	**new_array;
 
 	i = 0;
-	if (ft_strlen(new_str) == 0)
+	if (!new_str)
 		return (array);
 	if (!array)
 		new_array = ft_calloc(2, sizeof(char *));
@@ -47,13 +47,13 @@ int	ft_key_chars(char *str)
 	if (str[i] == '>')
 	{
 		while (str[i] == '>')
-			i += 1;
+			i++;
 		return (i);
 	}
 	else
 	{
 		while (str[i] == '<')
-			i += 1;
+			i++;
 		return (i);
 	}
 }
@@ -63,24 +63,29 @@ char	**ft_filter(char *part, int i)
 	char	**part_array;
 	char	*holder;
 	int		x;
-
+	int		j;
+	
 	part_array = NULL;
 	holder = NULL;
 	while (part[i])
 	{
-		i = ft_skip_quotes(part, i);
-		if (part[i] == '>' || part[i] == '<')
+		j = ft_skip_quotes(part, i);
+		if (j > i)
+			holder = ft_substr(part, i, j - i);
+		else if (part[i] == '>' || part[i] == '<')
 		{
 			part_array = ft_append(part_array, holder);
+			holder = NULL;
 			x = ft_key_chars(part + i);
-			part_array = ft_append(part_array, ft_substr(part, i, x));
+			if (x + i > i)
+				part_array = ft_append(part_array, ft_substr(part, i, x));
 			i += x;
 		}
 		else
-		{
 			holder = ft_append_char(holder, part[i]);
+		i = j;
+		if (part[i])
 			i++;
-		}
 	}
 	return (ft_append(part_array, holder));
 }
@@ -106,7 +111,7 @@ void	ft_prod_line(char **cmd, t_cmd *s_cmd, int is_last)
 	array = NULL;
 	while (cmd[i])
 	{
-		array = ft_destructor(array, ft_filter(cmd[i], 0), 0);
+		array = ft_destructor(array, ft_filter2(cmd[i], 0, 0), 0);
 		i++;
 	}
 	ft_set_helpers(array, s_cmd);

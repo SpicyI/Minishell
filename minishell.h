@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/13 19:17:31 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:14:36 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int			ft_dprintf(char *format, char *str);
 /*				herdoc		*/
 int			herdoc(char *delmiter, int opt);
 int			*init_herdocs(t_cmd *cmds, int num_of_cmds);
+int         builtin_herdoc(t_cmd *cmd);
 
 /*				closer.c*/
 void		close_fds(int *fds, int i, int opt);

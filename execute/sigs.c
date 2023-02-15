@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:03:32 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/15 23:34:00 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/15 23:36:13 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,3 +62,4 @@ void	sigquit_handler(int sig)
 			kill(g_gfl.pid[i], sig);
 	}
 }
+

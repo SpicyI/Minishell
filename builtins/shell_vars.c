@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:01:10 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/14 22:26:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:54:29 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,7 @@ void	ft_clean_cmd(t_cmd *cmd, int n)
 	tmp = (char **)ft_calloc(len - n + 1, sizeof(char *));
 	while (cmd->cmd[n])
 		tmp[++j] = ft_strdup(cmd->cmd[n++]);
-	n = -1;
-	while (cmd->cmd[++n])
-	{
-		free(cmd->cmd[n]);
-		cmd->cmd[n] = NULL;
-	}
-	free(cmd->cmd);
-	if (n == len || len == 1)
-	{
-		cmd->cmd = NULL;
-		free(tmp);
-		return ;
-	}
+	ft_free2(cmd->cmd);
 	cmd->cmd = tmp;
 }
 
@@ -100,7 +88,7 @@ void	sender(t_cmd *cmd)
 	i = 0;
 	while (cmd->cmd[i])
 	{
-		tmp = ft_export_spliter(ft_strdup(cmd->cmd[0]));
+		tmp = ft_export_spliter(ft_strdup(cmd->cmd[i]));
 		if (!is_shell_var(tmp))
 			ft_not_envadd_back(&g_gfl.not_env, ft_not_envnew(tmp));
 		else

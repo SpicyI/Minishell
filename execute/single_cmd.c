@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:02:06 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/14 22:10:40 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:59:23 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*getpath(char *cmd, char **path)
 		check = check_abs_path(cmd);
 	if (check)
 		return (check);
-	while (path && *path && *cmd)
+	while (path && *path && *cmd )
 	{
 		check = ft_strjoin(ft_strjoin(ft_strdup(*path), "/"), cmd);
 		if (!access(check, F_OK))

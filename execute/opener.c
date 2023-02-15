@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:12:37 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/14 20:03:16 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:47:38 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,35 +78,3 @@ int	opener(t_cmd *cmd, t_built *utils)
 		return (0);
 	return (1);
 }
-
-	// int	*herdocs;
-	// int	i;
-	// int fds[2];
-	// pid_t pid;
-
-	// herdocs = (int *)ft_calloc(num_of_cmds, sizeof(int));
-	// pipe(fds);
-	// pid = fork();
-	// if (!pid)
-	// {
-	// 	close(fds[0]);
-	// 	i = -1;
-	// 	while (++i < num_of_cmds)
-	// 		herdocs[i] = open_herdoc(cmds + i);
-	// 	write(fds[1], herdocs, num_of_cmds * sizeof(int));
-	// 	exit(0);
-	// }
-	// close(fds[1]);
-	// g_gfl.pid = &pid;
-	// g_gfl.crp = 1;
-	// waitpid(pid, &i, 0);
-	// g_gfl.crp = 0;
-	// g_gfl.pid = 0;
-	// if (ft_exitstatus(i))
-	// {
-	// 	close(fds[0]);
-	// 	return (NULL);
-	// }
-	// int r= read(fds[0], herdocs, num_of_cmds * sizeof(int));
-	// close(fds[0]);
-	// exit(0);

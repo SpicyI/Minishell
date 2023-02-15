@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:53:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/14 23:38:00 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:51:31 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_reset(char *line, t_cmds *cmds, int nl)
 void	ft_read_loop(int nl, char *line, t_cmds *cmds)
 {
 	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, sigquit_handler);
 	while (1)
 	{
 		line = ft_get_line(nl, line);

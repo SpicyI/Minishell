@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:57:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/14 23:27:03 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/15 23:28:20 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,48 +104,8 @@ typedef struct s_line
 }						t_line;
 
 t_line					g_gfl;
-// typedef struct s_env
-// {
-// 	char	*name;
-// 	char	*value;
-// 	void	*next;
-// }	t_env;
 
-// typedef struct s_not_env
-// {
-// 	char				*name;
-// 	char				*value;
-// 	struct s_not_env	*next;
-// }	t_not_env;
-
-// typedef struct s_cmd
-// {
-// 	char	**append;
-// 	char	**output;
-// 	char	**delimiter;
-// 	char	**input;
-// 	char	**cmd;
-// 	int		last_in;
-// 	int		last_out;
-// 	int		is_built_in;
-// }	t_cmd;
-
-// typedef struct s_cmds{
-// 	t_cmd	*line;
-// 	int		size;
-// }	t_cmds;
-
-// typedef struct s_line{
-// 	int			exit;
-// 	t_env		*env;
-// 	t_not_env	*not_env;
-// 	int			syntax_error; // false by default
-// 	char		*pipeline_error;
-// 	int			p_error_index; // -1 by default
-// }	t_line;
-
-// t_line	g_gfl;
-
+void    rl_replace_line(const char *text, int clear_undo);
 void					ft_butcher(char *line, char **cmds, char c);
 int						ft_count_cmds(char *line, char c, int i);
 char					**ft_super_split(char *line, char c);

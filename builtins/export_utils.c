@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 17:04:28 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/12 19:24:00 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/15 23:03:19 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	importer(char *str)
 	else
 	{
 		ft_dprintf(UNVALID_ID, str);
-		return (1);
 		free(str);
+		return (1);
 	}
 	return (0);
 }

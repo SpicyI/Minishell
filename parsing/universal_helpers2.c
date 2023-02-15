@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:02:04 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/14 23:37:33 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:57:28 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,22 @@ char	*ft_clean_join(char *str, char *str2)
 
 char	*ft_color(int i)
 {
+	char *line;
 	if (i)
-		return (readline("MINISHELL$ "));
+		line = readline("MINISHELL$ ");
 	else
-		return (readline("> "));
+		line = readline("> ");
+	if (!line)
+	{
+		printf("exit");
+		exit(0);
+	}
+	if (line  && !ft_strlen(line))
+	{
+		free(line);
+		return (NULL);
+	}
+	return (line);
 }
 
 int	ft_skip_quotes(char *str, int i)

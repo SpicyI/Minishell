@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:57:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/15 23:28:20 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 00:35:31 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct s_line
 
 t_line					g_gfl;
 
-void    rl_replace_line(const char *text, int clear_undo);
+void					rl_replace_line(const char *text, int clear_undo);
 void					ft_butcher(char *line, char **cmds, char c);
 int						ft_count_cmds(char *line, char c, int i);
 char					**ft_super_split(char *line, char c);

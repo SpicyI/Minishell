@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/15 22:51:48 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 00:35:25 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void		pipe_set(t_built *utils, t_cmd *cmd);
 /*                  signals             */
 void		sigint_handler(int sig);
 void		sigquit_handler(int sig);
-void	sigquit_handler(int sig);
+void		sigquit_handler(int sig);
 
 /*              bonus*/
 void		ft_replace(t_cmd *cmds, int size);

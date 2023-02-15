@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:02:04 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/15 22:57:28 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 00:34:56 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ char	*ft_clean_join(char *str, char *str2)
 
 char	*ft_color(int i)
 {
-	char *line;
+	char	*line;
+
 	if (i)
 		line = readline("MINISHELL$ ");
 	else
@@ -47,7 +48,7 @@ char	*ft_color(int i)
 		printf("exit");
 		exit(0);
 	}
-	if (line  && !ft_strlen(line))
+	if (line && !ft_strlen(line))
 	{
 		free(line);
 		return (NULL);

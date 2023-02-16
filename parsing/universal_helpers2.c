@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:02:04 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/16 00:34:56 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:51:50 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,16 @@ char	*ft_color(int i)
 {
 	char	*line;
 
+	printf("\033[0;32m");
 	if (i)
-		line = readline("MINISHELL$ ");
+	{
+		line = readline("minishell$ ");
+		printf("\033[0m");
+	}
 	else
 		line = readline("> ");
 	if (!line)
-	{
-		printf("exit");
 		exit(0);
-	}
-	if (line && !ft_strlen(line))
-	{
-		free(line);
-		return (NULL);
-	}
 	return (line);
 }
 

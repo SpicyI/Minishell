@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:57:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/16 00:35:31 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:52:59 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <termios.h>
 # include <unistd.h>
 
 typedef struct s_wild
@@ -111,9 +112,8 @@ int						ft_count_cmds(char *line, char c, int i);
 char					**ft_super_split(char *line, char c);
 void					ft_free_double(char **array);
 char					***ft_double_spit(char *line, t_cmds *cmds_list);
-void					ft_printf_double(char **array);
+int						ft_skip_alnum(char *str, int i);
 void					ft_prod_line(char **cmd, t_cmd *s_cmd, int is_last);
-char					**ft_filter(char *part, int i);
 int						ft_key_chars(char *str);
 char					**ft_append(char **array, char *new_str);
 int						ft_valid_syntax(char **cmd, int i, int is_last);
@@ -123,7 +123,6 @@ void					ft_left_arrow(char **cmd, int i, int is_last);
 int						ft_strcmp(char *str, char *str2);
 void					ft_fill_struct(char **array, t_cmd *cmd, int i,
 							int is_last);
-void					ft_print_struct(t_cmd *cmd);
 void					ft_init_struct(t_cmd *cmd);
 char					**ft_destructor(char **array, char **array2, int j);
 void					ft_pipeline_error(char *line, int i, int nbr);
@@ -156,7 +155,9 @@ char					*ft_hyphen(char *str);
 void					*ft_collect(int size, int nbr);
 char					*ft_get_line(int nb, char *line);
 int						ft_skip_quotes(char *str, int i);
-char					**ft_filter2(char *part, int i, int j);
 int						ft_normals(char *str, int i);
 int						ft_skip_me(char *str, char c);
+void					sanitize_quotes(t_cmd *s_cmd);
+void					ft_fill_double(char **array);
+char					**ft_filter2(char *part, int i, int j, int len);
 #endif

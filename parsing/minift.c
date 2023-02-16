@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:26:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/14 23:24:44 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:36:48 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,42 @@ char	*ft_get_line(int nl, char *line)
 			line2 = ft_trim(ft_color(1), " ");
 		if (!line2)
 			printf("\n");
+		else if (ft_strlen(line2) == 0)
+		{
+			free(line2);
+			line2 = NULL;
+		}
 	}
 	add_history(line2);
 	return (line2);
 }
 
-char	**ft_filter2(char *part, int i, int j)
+char	**ft_filter2(char *part, int i, int j, int len)
 {
 	char	**array;
+	char	*holder;
 
 	array = NULL;
-	while (part[i])
+	holder = NULL;
+	while (part && i < len && part[i])
 	{
-		j = i;
-		if (part[i] == '>')
-			j += ft_skip_me(part + j, '>');
-		else if (part[i] == '<')
-			j += ft_skip_me(part + j, '<');
-		else if (part[i] == '"')
-			j += ft_skip_me(part + j + 1, '"') + 1;
-		else if (part[i] == '\'')
-			j += ft_skip_me(part + j + 1, '\'') + 1;
-		else
-			j = ft_normals(part, i);
-		array = ft_append(array, ft_substr(part, i, j - i));
+		if (part[i] == '>' || part[i] == '<')
+		{
+			array = ft_append(array, holder);
+			j += ft_skip_me(part + j, part[i]);
+			array = ft_append(array, ft_substr(part, i, j - i));
+			holder = NULL;
+		}
+		else if (part[i] == '"' || part[i] == '\'')
+		{
+			j = ft_skip_quotes(part, i) + 1;
+			holder = ft_strjoin(holder, ft_substr(part, i, j - i));
+		}
+		else if (++j)
+			holder = ft_append_char(holder, part[i]);
 		i = j;
 	}
+	array = ft_append(array, holder);
 	return (array);
 }
 
@@ -58,8 +68,6 @@ int	ft_normals(char *str, int i)
 {
 	while (str[i])
 	{
-		if (str[i] == '<' || str[i] == '>')
-			break ;
 		if (str[i] == '"' || str[i] == '\'')
 			break ;
 		i++;
@@ -75,4 +83,16 @@ int	ft_skip_me(char *str, char c)
 	while (str[i] && str[i] == c)
 		i++;
 	return (i);
+}
+
+void	ft_fill_double(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array && array[i])
+	{
+		array[i] = ft_remove_quotes(array[i]);
+		i++;
+	}
 }

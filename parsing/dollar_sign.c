@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 00:09:50 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/14 23:24:44 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:36:48 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_find_env(char **array)
 				array[i] = ft_strjoin(ft_hyphen(array[i]), holder);
 			}
 		}
-		i++;
+			i++;
 	}
 }
 
@@ -57,14 +57,14 @@ char	*ft_replace_env(char *str, int i, int in_d, int in_s)
 			if (str[i] == '?')
 				i++;
 			else
-			{
-				while (ft_isalnum(str[i]))
-					i++;
-			}
+				i = ft_skip_alnum(str, i);
 		}
-		new_str = ft_append_char(new_str, str[i]);
-		if (str[i])
-			i++;
+		if (str[i] != '$' || in_s)
+		{
+			new_str = ft_append_char(new_str, str[i]);
+			if (str[i])
+				i++;
+		}
 	}
 	return (new_str);
 }
@@ -80,7 +80,7 @@ char	*ft_get_env(char *str, int i)
 	else if (str[i] == '?')
 		return (ft_itoa(g_gfl.exit));
 	j = i;
-	while (ft_isalnum(str[i]))
+	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;
 	name = ft_substr(str, j, i - j);
 	env_list = g_gfl.env;

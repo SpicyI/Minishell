@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 18:02:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/14 23:24:44 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:36:48 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,38 +58,45 @@ int	ft_key_chars(char *str)
 	}
 }
 
-void	ft_printf_double(char **array)
+int	ft_skip_alnum(char *str, int i)
 {
-	int	i;
-
-	i = 0;
-	while (array && array[i])
-	{
-		printf("%s\n", array[i]);
+	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;
-	}
+	return (i);
 }
 
 void	ft_prod_line(char **cmd, t_cmd *s_cmd, int is_last)
 {
 	int		i;
 	char	**array;
+	int		j;
 
 	i = 0;
 	array = NULL;
 	while (cmd[i])
 	{
-		array = ft_destructor(array, ft_filter2(cmd[i], 0, 0), 0);
+		j = ft_strlen(cmd[i]);
+		array = ft_destructor(array, ft_filter2(cmd[i], 0, 0, j), 0);
 		i++;
 	}
 	ft_set_helpers(array, s_cmd);
 	ft_fill_struct(array, s_cmd, 0, is_last);
 	if (s_cmd->cmd)
 		ft_find_env(s_cmd->cmd);
-	i = 0;
-	while (s_cmd->cmd && s_cmd->cmd[i])
-	{
-		s_cmd->cmd[i] = ft_remove_quotes(s_cmd->cmd[i]);
-		i++;
-	}
+	if (s_cmd->append)
+		ft_find_env(s_cmd->append);
+	if (s_cmd->input)
+		ft_find_env(s_cmd->input);
+	if (s_cmd->output)
+		ft_find_env(s_cmd->output);
+	sanitize_quotes(s_cmd);
+}
+
+void	sanitize_quotes(t_cmd *s_cmd)
+{
+	ft_fill_double(s_cmd->cmd);
+	ft_fill_double(s_cmd->output);
+	ft_fill_double(s_cmd->append);
+	ft_fill_double(s_cmd->input);
+	ft_fill_double(s_cmd->delimiter);
 }

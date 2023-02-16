@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 00:18:27 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 17:59:51 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 19:48:16 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	shell_exit(char **args)
 
 	printf("exit\n");
 	if (!args || !args[0])
-		exit(0);
+		exit(g_gfl.exit);
 	if ((args && !ft_strncmp(args[0], "--", 0)) || (!args || !args[0]))
 		exit(0);
 	if (!alldigit(args[0]))

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:53:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/16 16:43:00 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 19:35:51 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	ft_init_global(char **envp)
 	g_gfl.pipeline_error = NULL;
 	g_gfl.p_error_index = -1;
 	g_gfl.not_env = NULL;
+	g_gfl.pid = 0;
+	g_gfl.crp = 0;
 }
 
 void	ft_reset(char *line, t_cmds *cmds, int nl)

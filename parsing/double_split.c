@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:49:57 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/16 16:36:48 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:52:49 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int	ft_count_cmds(char *line, char c, int i)
 				i++;
 			cmds++;
 		}
-		if (line[i])
+		else if (line[i])
 			i++;
 	}
-	return (cmds + 1);
+	return (cmds);
 }
 
 char	**ft_super_split(char *line, char c)
@@ -61,7 +61,7 @@ char	**ft_super_split(char *line, char c)
 
 	i = 0;
 	nbr_of_cmds = ft_count_cmds(line, c, 0);
-	cmds = ft_calloc(nbr_of_cmds, sizeof(char *));
+	cmds = ft_calloc(nbr_of_cmds + 1, sizeof(char *));
 	ft_butcher(line, cmds, c);
 	return (cmds);
 }

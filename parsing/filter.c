@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 18:02:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/16 16:36:48 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:07:42 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	ft_prod_line(char **cmd, t_cmd *s_cmd, int is_last)
 	char	**array;
 	int		j;
 
-	i = 0;
 	array = NULL;
+	i = 0;
 	while (cmd[i])
 	{
 		j = ft_strlen(cmd[i]);

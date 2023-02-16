@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:02:06 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/15 23:38:11 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 19:46:49 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*getpath(char *cmd, char **path)
 	char	*check;
 
 	check = NULL;
-	if (path && ft_strchr(cmd, '/'))
+	if (path && cmd && ft_strchr(cmd, '/'))
 		check = check_abs_path(cmd);
 	if (check)
 		return (check);
@@ -100,7 +100,7 @@ void	ft_execve(t_cmd *cmd, int opt)
 		utils.herdoc_fd = open_herdoc(cmd);
 	if (!opener(cmd, &utils))
 		exit(1);
-	if (!cmd->cmd)
+	if (!cmd->cmd || !cmd->cmd[0])
 		exit(0);
 	ft_isdir(cmd->cmd[0], 0);
 	cmd_path = getpath(cmd->cmd[0], ft_split(ft_getenv("PATH"), ':'));

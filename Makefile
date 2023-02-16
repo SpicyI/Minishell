@@ -2,7 +2,7 @@ NAME = minishell
 SRC = $(wildcard parsing/*.c) $(wildcard builtins/*.c) $(wildcard execute/*.c) 
 LDFLAGS= -L /goinfre/del-khay/homebrew/opt/readline/lib -lreadline
 CPPFLAGS= -I /goinfre/del-khay/homebrew/opt/readline/include
-CC = cc -Wall -Wextra -Werror
+CC = cc -Wall -Wextra -Werror -fsanitize=address -g
 LIB = libft/libft.a
 OBJ = $(SRC:.c=.o)
 

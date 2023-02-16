@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:26:02 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/16 16:36:48 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:53:23 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,13 @@ char	**ft_filter2(char *part, int i, int j, int len)
 		else if (part[i] == '"' || part[i] == '\'')
 		{
 			j = ft_skip_quotes(part, i) + 1;
-			holder = ft_strjoin(holder, ft_substr(part, i, j - i));
+			holder = ft_clean_join(holder, ft_substr(part, i, j - i));
 		}
 		else if (++j)
 			holder = ft_append_char(holder, part[i]);
 		i = j;
 	}
-	array = ft_append(array, holder);
-	return (array);
+	return (ft_append(array, holder));
 }
 
 int	ft_normals(char *str, int i)

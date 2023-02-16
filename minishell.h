@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/16 00:35:25 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 17:59:19 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define HERDOC_OFF 0
 # define HERDOC_FD 1
 # define INPUT_FD 2
+# define PROMPT "\033[0;33mMinishell$ \033[0m"
 /*       error     */
 
 # define EXIT_NUM "minishell: exit: %s: numeric argument required\n"

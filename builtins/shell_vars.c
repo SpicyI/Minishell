@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:01:10 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/15 22:54:29 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 19:44:41 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	shell_env_set(t_cmd *cmd, int cmd_n)
 		{
 			j = 0;
 			j = has_shell_var(cmd[i].cmd);
-			if (j)
+			if (j != -1)
 				ft_clean_cmd(&cmd[i], j);
 			i++;
 		}
@@ -74,7 +74,7 @@ void	ft_clean_cmd(t_cmd *cmd, int n)
 	if (!n)
 		return ;
 	tmp = (char **)ft_calloc(len - n + 1, sizeof(char *));
-	while (cmd->cmd[n])
+	while (cmd->cmd && cmd->cmd[n])
 		tmp[++j] = ft_strdup(cmd->cmd[n++]);
 	ft_free2(cmd->cmd);
 	cmd->cmd = tmp;

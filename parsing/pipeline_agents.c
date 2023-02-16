@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 18:39:51 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/16 16:36:48 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:07:20 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_pipe_counter(char *line)
 			while (line[i] == '|' || line[i] == ' ')
 				i++;
 		}
-		else
+		else if (line[i])
 			i++;
 	}
 	return (nbr + 1);

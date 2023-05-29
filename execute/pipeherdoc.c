@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:31:36 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/14 23:18:42 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/18 23:47:24 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	*init_herdocs(t_cmd *cmds, int num_of_cmds)
 		pid = fork();
 		if (!pid)
 		{
+			ft_set_signals();
+			signal(SIGQUIT, SIG_IGN);
 			open_pipe_docs(cmds + i, utils.b_pipe);
 			exit(0);
 		}

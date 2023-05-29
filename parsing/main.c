@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:53:59 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/16 19:35:51 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/18 19:18:58 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void	ft_init_global(char **envp)
 
 void	ft_reset(char *line, t_cmds *cmds, int nl)
 {
+	ft_set_signals();
+	signal(SIGQUIT, sigquit_handler);
+	signal(SIGINT, sigint_handler);
 	g_gfl.syntax_error = 0;
 	g_gfl.p_error_index = -1;
 	g_gfl.pipeline_error = NULL;
@@ -42,20 +45,14 @@ void	ft_reset(char *line, t_cmds *cmds, int nl)
 
 void	ft_read_loop(int nl, char *line, t_cmds *cmds)
 {
-	struct termios	oldterm;
-	struct termios	oldterm2;
+	struct termios	oldterm[2];
 
-	tcgetattr(0, &oldterm);
-	oldterm2 = oldterm;
-	oldterm.c_lflag &= ~ISIG;
-	oldterm.c_lflag &= ~ECHOCTL;
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, sigquit_handler);
+	ft_signals(oldterm);
 	while (1)
 	{
-		tcsetattr(0, TCSANOW, &oldterm);
+		tcsetattr(0, TCSANOW, &oldterm[0]);
 		line = ft_get_line(nl, line);
-		tcsetattr(0, TCSANOW, &oldterm2);
+		tcsetattr(0, TCSANOW, &oldterm[1]);
 		ft_pipe_syntax(line, 0);
 		if (line[ft_strlen(line) - 1] == '|' && !g_gfl.pipeline_error)
 			nl = 1;

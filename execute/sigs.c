@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:03:32 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/16 19:35:06 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/19 00:36:20 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,23 @@ void	sigint_handler(int sig)
 	i = -1;
 	if (!g_gfl.crp)
 	{
-		write(1, "\n", 1);
+		ft_putchar_fd('\n', 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
 	else if (g_gfl.crp)
 	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
 		if (g_gfl.crp == 1 && g_gfl.pid)
-		{
 			kill(g_gfl.pid[0], SIGKILL);
-			return ;
+		else
+		{
+			while (g_gfl.pid && ++i < g_gfl.crp)
+				kill(g_gfl.pid[i], sig);
 		}
-		while (g_gfl.pid && ++i < g_gfl.crp)
-			kill(g_gfl.pid[i], sig);
+		ft_putchar_fd('\n', 1);
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 	return ;
 }
@@ -46,10 +45,12 @@ void	sigquit_handler(int sig)
 	int	i;
 
 	i = -1;
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-	if (g_gfl.crp == 1 && sig == SIGQUIT)
+	if (g_gfl.crp == 0 && g_gfl.pid == 0)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else if (g_gfl.crp == 1 && sig == SIGQUIT)
 	{
 		kill(g_gfl.pid[0], sig);
 	}
@@ -63,4 +64,21 @@ void	sigquit_handler(int sig)
 		while (++i < g_gfl.crp)
 			kill(g_gfl.pid[i], sig);
 	}
+	return ;
+}
+
+void	ft_set_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+void	ft_signals(struct termios oldterm[2])
+{
+	tcgetattr(0, &oldterm[0]);
+	oldterm[1] = oldterm[0];
+	oldterm[0].c_lflag &= ~ISIG;
+	oldterm[0].c_lflag &= ~ECHOCTL;
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 }

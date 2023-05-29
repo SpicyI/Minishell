@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:49:36 by azakariy          #+#    #+#             */
-/*   Updated: 2023/02/16 17:50:08 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/18 17:46:44 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,11 @@ void	ft_right_arrow(char **cmd, int i, int is_last)
 		free(holder);
 	}
 	else if (cmd[i + 1][0] == '<')
-		ft_throw_error(ft_substr(cmd[i + 1], 0, 2), 1);
+	{
+		holder = ft_substr(cmd[i + 1], 0, 2);
+		ft_throw_error(holder, 1);
+		free(holder);
+	}
 }
 
 int	ft_valid_syntax(char **cmd, int i, int is_last)

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 18:31:50 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/11 23:44:52 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/18 23:18:55 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,3 @@ int	echo(char **str)
 		ft_putchar_fd('\n', 1);
 	return (0);
 }
-
-// int	main(int ac, char **av)
-// {
-// 	echo(av + 1);
-// 	return (0);
-// }

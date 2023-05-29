@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:02:06 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/16 19:46:49 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/17 23:58:47 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int	single_cmd(t_cmd *cmd)
 	if (id[0] == -1)
 		return (ft_dprintf("fork error\n", NULL));
 	if (!id[0])
+	{
+		ft_set_signals();
 		ft_execve(cmd, HERDOC_ON);
+	}
 	waitpid(id[0], &status, 0);
 	free(id);
 	g_gfl.pid = NULL;
@@ -67,7 +70,7 @@ char	*getpath(char *cmd, char **path)
 	char	*check;
 
 	check = NULL;
-	if (path && cmd && ft_strchr(cmd, '/'))
+	if (cmd && ft_strchr(cmd, '/'))
 		check = check_abs_path(cmd);
 	if (check)
 		return (check);

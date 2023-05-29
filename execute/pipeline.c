@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:47:13 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/16 18:34:52 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 20:24:37 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ void	child_process(t_cmd *cmds, t_built *utils, int *herdocs, int i)
 		}
 		close(herdocs[i]);
 	}
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	ft_set_signals();
 	if ((cmds + i)->is_built_in)
 		exit(builtin(cmds + i, HERDOC_OFF));
 	ft_execve(cmds + i, HERDOC_OFF);

@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 18:54:11 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/16 17:59:19 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/16 20:36:11 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,8 @@ void		pipe_set(t_built *utils, t_cmd *cmd);
 void		sigint_handler(int sig);
 void		sigquit_handler(int sig);
 void		sigquit_handler(int sig);
+void		ft_set_signals(void);
+void		ft_signals(struct termios oldterm[2]);
 
 /*              bonus*/
 void		ft_replace(t_cmd *cmds, int size);

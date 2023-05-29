@@ -6,7 +6,7 @@
 /*   By: del-khay <del-khay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:12:37 by del-khay          #+#    #+#             */
-/*   Updated: 2023/02/16 00:35:13 by del-khay         ###   ########.fr       */
+/*   Updated: 2023/02/19 00:32:39 by del-khay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	open_herdoc(t_cmd *cmd)
 	if (!len)
 		return (0);
 	i = 0;
+	signal(SIGQUIT, SIG_IGN);
 	while (cmd->delimiter[i] && i < len - 1)
 	{
 		herdoc(cmd->delimiter[i], HERDOC_OFF);
@@ -63,6 +64,7 @@ int	open_herdoc(t_cmd *cmd)
 		fd = herdoc(cmd->delimiter[i], HERDOC_ON);
 	else
 		fd = herdoc(cmd->delimiter[i], HERDOC_OFF);
+	signal(SIGQUIT, SIG_DFL);
 	return (fd);
 }
 

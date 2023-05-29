@@ -5,7 +5,10 @@ Minishell is a simplified Unix shell implementation, built as a programming proj
 This project aims to recreate a subset of the functionalities found in a traditional Unix shell. It serves as an exercise in systems programming and provides an opportunity to understand the inner workings of a shell environment.
 
 
-[[toc]]
+## Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Conclusion](#conclusion) 
 
 
 ## Features

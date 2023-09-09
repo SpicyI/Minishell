@@ -24,7 +24,7 @@ This project aims to recreate a subset of the functionalities found in a traditi
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/minishell.git
+   git clone https://github.com/SpicyI/minishell.git
     ```
 2. Make sure to install the readline library
    ```sh
